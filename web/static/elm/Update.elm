@@ -12,6 +12,8 @@ changeUrlCommand model route =
   case route of
     HomeRoute ->
       Cmd.none
+    InfoCollectionRoute ->
+      Cmd.none
     FoodRoute ->
       Cmd.none
     IntroRoute ->

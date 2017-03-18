@@ -1,4 +1,4 @@
 module Config exposing(..)
 
 src_url : String
-src_url = ""
+src_url = "/gymcalc"

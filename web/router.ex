@@ -14,9 +14,13 @@ defmodule Gymcalc.Router do
   end
 
   scope "/", Gymcalc do
+    src_url = "/gymcalc"
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get ( src_url <> "" ), PageController, :index
+    get ( src_url <> "/intro" ), PageController, :index
+    get ( src_url <> "/food" ), PageController, :index
+    get ( src_url <> "/infocollection" ), PageController, :index
   end
 
   # Other scopes may use custom stacks.

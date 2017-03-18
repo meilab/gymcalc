@@ -9,6 +9,8 @@ import Markdown
 import Material.Layout as Layout
 import Material.Options as Options exposing (css, cs, when)
 import Material.Icon as Icon
+import Material.Textfield as Textfield
+import Material.List as Lists
 import Material.Color as Color
 import Material.Scheme
 import Routing exposing(Route(..))
@@ -74,8 +76,11 @@ type alias MenuItem =
 
 menuItem : List MenuItem
 menuItem =
-  [ { text = "Home", iconName = "play", route = HomeRoute }
-  , { text = "Food", iconName = "play", route = FoodRoute }]
+  [ { text = "计算结果", iconName = "apps", route = HomeRoute }
+  , { text = "数据输入", iconName = "list", route = InfoCollectionRoute }
+  , { text = "健康饮食", iconName = "dashboard", route = FoodRoute }
+  , { text = "产品简介", iconName = "dashboard", route = IntroRoute }
+  ]
 
 
 viewDrawerMenuItem : Model -> MenuItem -> Html Msg
@@ -98,11 +103,12 @@ viewDrawerMenuItem model menuItem =
       , Options.css "color" "rgba(255, 255, 255, 0.56)"
       , Options.css "font-weight" "500"
       ]
-      [ Icon.view menuItem.iconName
+      [ 
+        Icon.view menuItem.iconName
         [ Color.text <| Color.color Color.BlueGrey Color.S500
         , Options.css "margin-right" "32px"
         ]
-        , text menuItem.text
+      , text menuItem.text
       ]
 
 
@@ -152,6 +158,8 @@ viewBody model =
   case model.route of
     HomeRoute ->
       homeView model
+    InfoCollectionRoute ->
+      infoCollectionView model
     FoodRoute ->
       introView
     IntroRoute ->
@@ -172,13 +180,58 @@ homeView model =
     , div [][ text ( "训练时长: " ++ ( toString( model.input.training_time ) ) ) ]
     ]
 
+infoCollectionView : Model -> Html Msg
+infoCollectionView model =
+  Lists.ul
+    [ css "display" "flex"
+    , css "flex-direction" "column"
+    , css "align-items" "center"
+    ]
+    [ Lists.li []
+        [ Lists.content []
+            [ Lists.icon "inbox" []
+            , Textfield.render Mdl [0] model.mdl
+              [ Textfield.label "请输入体重"
+              , Options.onInput Weight
+              , Textfield.floatingLabel
+              , Textfield.text_
+              ]
+              []
+            ]
+        ]
+    , Lists.li []
+        [ Lists.content []
+            [ Lists.icon "send" []
+            , Textfield.render Mdl [1] model.mdl
+              [ Textfield.label "请输入体脂率"
+              , Options.onInput WeightFatRate
+              , Textfield.floatingLabel
+              , Textfield.text_
+              ]
+              []
+            ]
+        ]
+    , Lists.li []
+        [ Lists.content []
+            [ Lists.icon "time" []
+            , Textfield.render Mdl [1] model.mdl
+              [ Textfield.label "请输入训练时长(分钟)"
+              , Options.onInput TrainingTime
+              , Textfield.floatingLabel
+              , Textfield.text_
+              ]
+              []
+            ]
+        ]
+    ]
+
 introView : Html Msg
 introView =
   Markdown.toHtml [] markdown
 
 markdown: String
 markdown = """
-# This is Markdown
+# 三分练七分吃
 
 [Markdown](http://daringfireball.net/projects/markdown/) lets you
 write content in a really natural way.
