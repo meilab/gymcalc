@@ -2,6 +2,7 @@ module Models exposing(Model, initialModel)
 
 import Material
 import Routing exposing(Route)
+import Maybe exposing(Maybe)
 
 type alias FundamentalValues =
   { weight_in_pound : Float
@@ -16,15 +17,16 @@ type alias MetabolismValues =
   }
 
 type alias InputValues =
-  { weight : Float
-  , weight_fat_rate : Float
-  , training_time : Float
+  { weight : Maybe Float
+  , weight_fat_rate : Maybe Float
+  , training_time : Maybe Float
   }
 
 type alias Model =
   { mdl : Material.Model
+  , selectedTab : Int
   , route : Routing.Route
-  , input : InputValues
+  , inputValues : InputValues
   , fundamental : FundamentalValues
   , metabolism : MetabolismValues
   }
@@ -32,8 +34,9 @@ type alias Model =
 initialModel : Route -> Model
 initialModel route =
     { mdl = Material.model
+    , selectedTab = 0
     , route = route
-    , input = InputValues 0 0 0
+    , inputValues = InputValues Nothing Nothing Nothing
     , fundamental = FundamentalValues 0 0 0
     , metabolism = MetabolismValues 0 0 0
     }

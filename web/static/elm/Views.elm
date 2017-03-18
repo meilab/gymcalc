@@ -13,7 +13,12 @@ import Material.Textfield as Textfield
 import Material.List as Lists
 import Material.Color as Color
 import Material.Scheme
+import Material.Card as Card
+import Material.Tabs as Tabs
+import Material.Table as Table
+import Material.Grid as Grid exposing (grid, size, cell, Device(..))
 import Routing exposing(Route(..))
+import Config exposing(invalidValue)
 
 
 styles : String
@@ -167,18 +172,66 @@ viewBody model =
     NotFoundRoute ->
       notFoundView
 
+
 homeView : Model -> Html Msg
 homeView model =
-  div []
-    [
-      input [ type_ "text", placeholder "体重", onInput Weight] []
-    , input [ type_ "text", placeholder "体脂率", onInput WeightFatRate] []
-    , input [ type_ "text", placeholder "训练时长", onInput TrainingTime] []
-    , button [ onClick Submit ] [text "submit"]
-    , div [][ text ( "体重: " ++ ( toString( model.input.weight ) ) ) ]
-    , div [][ text ( "体脂率: " ++ ( toString( model.input.weight_fat_rate ) ) ) ]
-    , div [][ text ( "训练时长: " ++ ( toString( model.input.training_time ) ) ) ]
+  Tabs.render Mdl [0] model.mdl
+  [ Tabs.ripple
+  , Tabs.onSelectTab SelectTab
+  , Tabs.activeTab model.selectedTab
+  ]
+  [ Tabs.label
+      [ Options.center ]
+      [ Icon.i "info_outline"
+      , Options.span [ css "width" "4px" ] []
+      , text "高碳日营养"
+      ]
+  , Tabs.label
+      [ Options.center ]
+      [ Icon.i "code"
+      , Options.span [ css "width" "4px" ] []
+      , text "高碳日营养"
+      ]
+  ]
+  [ case model.selectedTab of
+      0 -> nutriList model
+      _ -> nutriList model
+  ]
+
+type alias Data =
+  { material : String
+  , quantity : String
+  , unitPrice : String
+  }
+
+data : List Data
+data =
+  [ { material = "Acrylic (Transparent)"   , quantity = "25" , unitPrice = "$2.90" }
+  , { material = "Plywood (Birch)"         , quantity = "50" , unitPrice = "$1.25" }
+  , { material = "Laminate (Gold on Blue)" , quantity = "10" , unitPrice = "$2.35" }
+  ]
+
+nutriList : Model -> Html Msg
+nutriList model =
+  Table.table []
+  [ Table.thead []
+    [ Table.tr []
+      [ Table.th [] [ text "营养元素" ]
+      , Table.th [ ] [ text "数量" ]
+      , Table.th [ ] [ text "单位" ]
+      ]
     ]
+  , Table.tbody []
+      (data |> List.map (\item ->
+        Table.tr []
+          [ Table.td [] [ text item.material ]
+          , Table.td [ Table.numeric ] [ text item.quantity ]
+          , Table.td [ Table.numeric ] [ text "克" ]
+          ]
+        )
+      )
+  ]
+
 
 infoCollectionView : Model -> Html Msg
 infoCollectionView model =
@@ -191,10 +244,12 @@ infoCollectionView model =
         [ Lists.content []
             [ Lists.icon "inbox" []
             , Textfield.render Mdl [0] model.mdl
-              [ Textfield.label "请输入体重"
+              [ Textfield.label ( inputLabel "请输入体重(公斤): 例如 75" "公斤" model.inputValues.weight )
               , Options.onInput Weight
               , Textfield.floatingLabel
               , Textfield.text_
+              , Textfield.error ("请输入有效数字: 例如 75")
+                |> Options.when ( valueValidation model.inputValues.weight )
               ]
               []
             ]
@@ -203,10 +258,12 @@ infoCollectionView model =
         [ Lists.content []
             [ Lists.icon "send" []
             , Textfield.render Mdl [1] model.mdl
-              [ Textfield.label "请输入体脂率"
+              [ Textfield.label ( inputLabel "请输入体脂率: 例如 0.23" " :体脂率" model.inputValues.weight_fat_rate )
               , Options.onInput WeightFatRate
               , Textfield.floatingLabel
               , Textfield.text_
+              , Textfield.error ("请输入有效数字: 例如 0.23")
+                |> Options.when ( valueValidation model.inputValues.weight_fat_rate )
               ]
               []
             ]
@@ -214,16 +271,38 @@ infoCollectionView model =
     , Lists.li []
         [ Lists.content []
             [ Lists.icon "time" []
-            , Textfield.render Mdl [1] model.mdl
-              [ Textfield.label "请输入训练时长(分钟)"
+            , Textfield.render Mdl [2] model.mdl
+              [ Textfield.label ( inputLabel "请输入训练时长: 例如 90" " 分钟训练时间" model.inputValues.training_time )
               , Options.onInput TrainingTime
               , Textfield.floatingLabel
               , Textfield.text_
+              , Textfield.error ("请输入有效数字: 例如 90")
+                |> Options.when ( valueValidation model.inputValues.training_time )
               ]
               []
             ]
         ]
     ]
+
+valueValidation : Maybe Float -> Bool
+valueValidation maybeNum =
+  case maybeNum of
+    Just num ->
+      num == invalidValue
+    Nothing ->
+      False
+
+
+inputLabel : String -> String -> Maybe Float -> String
+inputLabel defaultMesssage append inputNum =
+  case inputNum of
+    Just num ->
+      if ( num == invalidValue ) then
+        "请输入有效数字"
+      else
+         toString num ++ append
+    Nothing ->
+      defaultMesssage
 
 introView : Html Msg
 introView =

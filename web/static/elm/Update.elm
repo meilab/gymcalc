@@ -6,6 +6,7 @@ import Material
 
 import Navigation
 import Routing exposing(Route(..), parseLocation)
+import Config exposing(invalidValue)
 
 changeUrlCommand : Model -> Route -> Cmd Msg
 changeUrlCommand model route =
@@ -26,30 +27,33 @@ update msg model =
   case msg of
     Weight weight ->
       let
-        input = model.input
-        newInput = { input | weight = Result.withDefault 70 ( String.toFloat ( weight ) ) }
+        inputValues = model.inputValues
+        newInputValues = { inputValues | weight = Just ( Result.withDefault invalidValue ( String.toFloat ( weight ) ) ) }
       in
-        ( { model | input = newInput }, Cmd.none)
+        ( { model | inputValues = newInputValues }, Cmd.none)
 
     WeightFatRate rate ->
       let
-        input = model.input
-        newInput = { input | weight_fat_rate = Result.withDefault 70 ( String.toFloat ( rate ) ) }
+        inputValues = model.inputValues
+        newInputValues = { inputValues | weight_fat_rate = Just ( Result.withDefault invalidValue ( String.toFloat ( rate ) ) ) }
       in
-        ( { model | input = newInput }, Cmd.none)
+        ( { model | inputValues = newInputValues }, Cmd.none)
 
     TrainingTime time ->
       let
-        input = model.input
-        newInput = { input | training_time = Result.withDefault 70 ( String.toFloat ( time ) ) }
+        inputValues = model.inputValues
+        newInputValues = { inputValues | training_time = Just ( Result.withDefault invalidValue ( String.toFloat ( time ) ) ) }
       in
-        ( { model | input = newInput }, Cmd.none)
+        ( { model | inputValues = newInputValues }, Cmd.none)
 
     Submit ->
       ( model, Cmd.none )
 
     Mdl msg_ ->
       Material.update Mdl msg_ model
+
+    SelectTab num ->
+      ( { model | selectedTab = num }, Cmd.none )
 
     NewUrl url ->
       model ! [ Navigation.newUrl url ]

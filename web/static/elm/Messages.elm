@@ -9,5 +9,6 @@ type Msg
   | TrainingTime String
   | Submit
   | Mdl (Material.Msg Msg)
+  | SelectTab Int
   | NewUrl String
   | OnLocationChange Location
