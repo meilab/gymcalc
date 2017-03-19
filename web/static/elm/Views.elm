@@ -209,6 +209,7 @@ nutriList nutritionList =
       [ Table.th [] [ text "营养元素" ]
       , Table.th [] [ text "数量" ]
       , Table.th [] [ text "单位" ]
+      , Table.th [] [ text "实际摄取量" ]
       ]
     ]
   , Table.tbody []
@@ -217,6 +218,7 @@ nutriList nutritionList =
           [ Table.td [] [ text item.material ]
           , Table.td [ Table.numeric ] [ text ( toString item.quantity ) ]
           , Table.td [ Table.numeric ] [ text "克" ]
+          , Table.td [ Table.numeric ] [ text ( toString item.actualQuantity ) ]
           ]
         )
       )

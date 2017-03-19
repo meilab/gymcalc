@@ -18,7 +18,8 @@ type alias MetabolismValues =
 
 type alias NutritionValue =
   { material : String
-  , quantity : Float
+  , quantity : Int
+  , actualQuantity : Int
   }
 
 type alias HighDayNutrition = List NutritionValue
@@ -28,20 +29,29 @@ type alias LowDayNutrition = List NutritionValue
 nutritionConstructor : List NutritionValue
 nutritionConstructor =
   [ { material = "碳水化物"
-    , quantity = 76.2
+    , quantity = 76
+    , actualQuantity = 80
     }
   , { material = "蛋白质"
-    , quantity = 177.84
+    , quantity = 177
+    , actualQuantity = 180
     }
   , { material = "脂肪"
-    , quantity = 112.91
+    , quantity = 112
+    , actualQuantity = 120
     }
   ]
+
+type alias InputFood =
+  { name : String
+  , quantity : Maybe Float
+  }
 
 type alias InputValues =
   { weight : Maybe Float
   , weight_fat_rate : Maybe Float
   , training_time : Maybe Float
+  , foods : List InputFood
   }
 
 type alias Model =
@@ -60,7 +70,7 @@ initialModel route =
     { mdl = Material.model
     , selectedTab = 0
     , route = route
-    , inputValues = InputValues Nothing Nothing Nothing
+    , inputValues = InputValues Nothing Nothing Nothing []
     , fundamental = FundamentalValues 0 0 0
     , metabolism = MetabolismValues 0 0 0
     , highDayNutrition = nutritionConstructor

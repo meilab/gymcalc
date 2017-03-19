@@ -16916,13 +16916,13 @@ var _user$project$Routing$parseLocation = function (location) {
 
 var _user$project$Models$nutritionConstructor = {
 	ctor: '::',
-	_0: {material: '碳水化物', quantity: 76.2},
+	_0: {material: '碳水化物', quantity: 76, actualQuantity: 80},
 	_1: {
 		ctor: '::',
-		_0: {material: '蛋白质', quantity: 177.84},
+		_0: {material: '蛋白质', quantity: 177, actualQuantity: 180},
 		_1: {
 			ctor: '::',
-			_0: {material: '脂肪', quantity: 112.91},
+			_0: {material: '脂肪', quantity: 112, actualQuantity: 120},
 			_1: {ctor: '[]'}
 		}
 	}
@@ -16935,20 +16935,29 @@ var _user$project$Models$MetabolismValues = F3(
 	function (a, b, c) {
 		return {fundamental: a, training: b, total: c};
 	});
-var _user$project$Models$NutritionValue = F2(
-	function (a, b) {
-		return {material: a, quantity: b};
-	});
-var _user$project$Models$InputValues = F3(
+var _user$project$Models$NutritionValue = F3(
 	function (a, b, c) {
-		return {weight: a, weight_fat_rate: b, training_time: c};
+		return {material: a, quantity: b, actualQuantity: c};
+	});
+var _user$project$Models$InputFood = F2(
+	function (a, b) {
+		return {name: a, quantity: b};
+	});
+var _user$project$Models$InputValues = F4(
+	function (a, b, c, d) {
+		return {weight: a, weight_fat_rate: b, training_time: c, foods: d};
 	});
 var _user$project$Models$initialModel = function (route) {
 	return {
 		mdl: _debois$elm_mdl$Material$model,
 		selectedTab: 0,
 		route: route,
-		inputValues: A3(_user$project$Models$InputValues, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+		inputValues: A4(
+			_user$project$Models$InputValues,
+			_elm_lang$core$Maybe$Nothing,
+			_elm_lang$core$Maybe$Nothing,
+			_elm_lang$core$Maybe$Nothing,
+			{ctor: '[]'}),
 		fundamental: A3(_user$project$Models$FundamentalValues, 0, 0, 0),
 		metabolism: A3(_user$project$Models$MetabolismValues, 0, 0, 0),
 		highDayNutrition: _user$project$Models$nutritionConstructor,
@@ -17002,7 +17011,7 @@ var _user$project$Views_Food$foodList = A2(
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('单位量'),
+									_0: _elm_lang$html$Html$text('蛋白质'),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -17012,7 +17021,7 @@ var _user$project$Views_Food$foodList = A2(
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('蛋白质'),
+										_0: _elm_lang$html$Html$text('脂肪'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -17022,7 +17031,7 @@ var _user$project$Views_Food$foodList = A2(
 										{ctor: '[]'},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('脂肪'),
+											_0: _elm_lang$html$Html$text('碳水'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
@@ -17032,7 +17041,7 @@ var _user$project$Views_Food$foodList = A2(
 											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('碳水化合物'),
+												_0: _elm_lang$html$Html$text('Tips'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -17075,7 +17084,8 @@ var _user$project$Views_Food$foodList = A2(
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('每克'),
+											_0: _elm_lang$html$Html$text(
+												_elm_lang$core$Basics$toString(item.protein)),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
@@ -17090,7 +17100,7 @@ var _user$project$Views_Food$foodList = A2(
 											{
 												ctor: '::',
 												_0: _elm_lang$html$Html$text(
-													_elm_lang$core$Basics$toString(item.protein)),
+													_elm_lang$core$Basics$toString(item.fat)),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
@@ -17105,7 +17115,7 @@ var _user$project$Views_Food$foodList = A2(
 												{
 													ctor: '::',
 													_0: _elm_lang$html$Html$text(
-														_elm_lang$core$Basics$toString(item.fat)),
+														_elm_lang$core$Basics$toString(item.carbohydrate)),
 													_1: {ctor: '[]'}
 												}),
 											_1: {
@@ -17119,26 +17129,10 @@ var _user$project$Views_Food$foodList = A2(
 													},
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html$text(
-															_elm_lang$core$Basics$toString(item.carbohydrate)),
+														_0: _elm_lang$html$Html$text(item.note),
 														_1: {ctor: '[]'}
 													}),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_debois$elm_mdl$Material_Table$td,
-														{
-															ctor: '::',
-															_0: _debois$elm_mdl$Material_Table$numeric,
-															_1: {ctor: '[]'}
-														},
-														{
-															ctor: '::',
-															_0: _elm_lang$html$Html$text(item.note),
-															_1: {ctor: '[]'}
-														}),
-													_1: {ctor: '[]'}
-												}
+												_1: {ctor: '[]'}
 											}
 										}
 									}
@@ -17566,7 +17560,18 @@ var _user$project$Views$nutriList = function (nutritionList) {
 											_0: _elm_lang$html$Html$text('单位'),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Table$th,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('实际摄取量'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}),
@@ -17622,7 +17627,23 @@ var _user$project$Views$nutriList = function (nutritionList) {
 													_0: _elm_lang$html$Html$text('克'),
 													_1: {ctor: '[]'}
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Table$td,
+													{
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Table$numeric,
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text(
+															_elm_lang$core$Basics$toString(item.actualQuantity)),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								});
@@ -18022,36 +18043,34 @@ var _user$project$Views$MenuItem = F3(
 		return {text: a, iconName: b, route: c};
 	});
 
-var _user$project$Update$calcLowDayNutrition = function (totalMetabolism) {
-	return {
-		ctor: '::',
-		_0: {material: '碳水化物', quantity: (totalMetabolism * 0.15) / 4},
-		_1: {
+var _user$project$Update$calcNutrition = F7(
+	function (totalMetabolism, carboFactor, proteinFactor, fatFactor, actualCarbohydrate, actualProtein, actualFat) {
+		return {
 			ctor: '::',
-			_0: {material: '蛋白质', quantity: (totalMetabolism * 0.35) / 4},
+			_0: {
+				material: '碳水化物',
+				quantity: _elm_lang$core$Basics$round(totalMetabolism * carboFactor),
+				actualQuantity: actualCarbohydrate
+			},
 			_1: {
 				ctor: '::',
-				_0: {material: '脂肪', quantity: (totalMetabolism * 0.5) / 9},
-				_1: {ctor: '[]'}
+				_0: {
+					material: '蛋白质',
+					quantity: _elm_lang$core$Basics$round(totalMetabolism * proteinFactor),
+					actualQuantity: actualProtein
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						material: '脂肪',
+						quantity: _elm_lang$core$Basics$round(totalMetabolism * fatFactor),
+						actualQuantity: actualFat
+					},
+					_1: {ctor: '[]'}
+				}
 			}
-		}
-	};
-};
-var _user$project$Update$calcHighDayNutrition = function (totalMetabolism) {
-	return {
-		ctor: '::',
-		_0: {material: '碳水化物', quantity: (totalMetabolism * 0.65) / 4},
-		_1: {
-			ctor: '::',
-			_0: {material: '蛋白质', quantity: (totalMetabolism * 0.25) / 4},
-			_1: {
-				ctor: '::',
-				_0: {material: '脂肪', quantity: (totalMetabolism * 0.1) / 9},
-				_1: {ctor: '[]'}
-			}
-		}
-	};
-};
+		};
+	});
 var _user$project$Update$calcMetabolism = F3(
 	function (inputValue, weight_in_pound, thin_weight_in_pound) {
 		var fundamental = thin_weight_in_pound * 12.5;
@@ -18199,8 +18218,8 @@ var _user$project$Update$update = F2(
 			default:
 				var newFundamental = _user$project$Update$calcFundamental(model.inputValues);
 				var newMetabolism = A3(_user$project$Update$calcMetabolism, model.inputValues, newFundamental.weight_in_pound, newFundamental.thin_weight_in_pound);
-				var newHighDayNutrition = _user$project$Update$calcHighDayNutrition(newMetabolism.total);
-				var newLowDayNutrition = _user$project$Update$calcLowDayNutrition(newMetabolism.total);
+				var newHighDayNutrition = A7(_user$project$Update$calcNutrition, newMetabolism.total, 0.1625, 6.25e-2, 1.1111111e-2, 350, 150, 20);
+				var newLowDayNutrition = A7(_user$project$Update$calcNutrition, newMetabolism.total, 3.75e-2, 8.75e-2, 5.5555556e-2, 80, 180, 120);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(

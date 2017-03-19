@@ -1,7 +1,7 @@
 module Update exposing(..)
 
 import Messages exposing(Msg(..))
-import Models exposing(Model, InputValues, FundamentalValues, MetabolismValues, HighDayNutrition, LowDayNutrition)
+import Models exposing(Model, InputValues, FundamentalValues, MetabolismValues, NutritionValue)
 import Material
 
 import Navigation
@@ -80,8 +80,8 @@ update msg model =
       let
         newFundamental = calcFundamental model.inputValues
         newMetabolism = calcMetabolism model.inputValues newFundamental.weight_in_pound newFundamental.thin_weight_in_pound
-        newHighDayNutrition = calcHighDayNutrition newMetabolism.total
-        newLowDayNutrition = calcLowDayNutrition newMetabolism.total
+        newHighDayNutrition = calcNutrition newMetabolism.total 0.1625 0.0625 0.011111111 350 150 20
+        newLowDayNutrition = calcNutrition newMetabolism.total 0.0375 0.0875 0.055555556 80 180 120
       in
         ( { model | fundamental = newFundamental
                     , metabolism = newMetabolism
@@ -134,28 +134,19 @@ calcMetabolism inputValue weight_in_pound thin_weight_in_pound=
     , total = fundamental + training
     }
 
-calcHighDayNutrition : Float -> HighDayNutrition
-calcHighDayNutrition totalMetabolism =
+calcNutrition : Float -> Float -> Float -> Float  -> Int -> Int -> Int -> List NutritionValue
+calcNutrition totalMetabolism carboFactor proteinFactor fatFactor actualCarbohydrate actualProtein actualFat =
     [ { material = "碳水化物"
-      , quantity = totalMetabolism * 0.65 / 4
+      , quantity = round ( totalMetabolism * carboFactor )
+      , actualQuantity = actualCarbohydrate
       }
     , { material = "蛋白质"
-      , quantity = totalMetabolism * 0.25 / 4
+      , quantity = round ( totalMetabolism * proteinFactor )
+      , actualQuantity = actualProtein
       }
     , { material = "脂肪"
-      , quantity = totalMetabolism * 0.1 / 9
+      , quantity = round ( totalMetabolism * fatFactor )
+      , actualQuantity = actualFat
       }
   ]
 
-calcLowDayNutrition : Float -> LowDayNutrition
-calcLowDayNutrition totalMetabolism =
-  [ { material = "碳水化物"
-    , quantity = totalMetabolism * 0.15 / 4
-    }
-  , { material = "蛋白质"
-    , quantity = totalMetabolism * 0.35 / 4
-    }
-  , { material = "脂肪"
-    , quantity = totalMetabolism * 0.5 / 9
-    }
-  ]
