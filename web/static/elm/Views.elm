@@ -1,10 +1,9 @@
 module Views exposing (..)
 
 import Html exposing (..)
-import Html.Events exposing(..)
 import Html.Attributes exposing(..)
 import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Models exposing (Model, NutritionValue)
 import Markdown
 import Material.Layout as Layout
 import Material.Options as Options exposing (css, cs, when)
@@ -13,6 +12,7 @@ import Material.Textfield as Textfield
 import Material.List as Lists
 import Material.Color as Color
 import Material.Scheme
+import Material.Button as Button
 import Material.Card as Card
 import Material.Tabs as Tabs
 import Material.Table as Table
@@ -190,12 +190,12 @@ homeView model =
       [ Options.center ]
       [ Icon.i "code"
       , Options.span [ css "width" "4px" ] []
-      , text "高碳日营养"
+      , text "低碳日营养"
       ]
   ]
   [ case model.selectedTab of
-      0 -> nutriList model
-      _ -> nutriList model
+      0 -> nutriList model.highDayNutrition
+      _ -> nutriList model.lowDayNutrition
   ]
 
 type alias Data =
@@ -204,28 +204,22 @@ type alias Data =
   , unitPrice : String
   }
 
-data : List Data
-data =
-  [ { material = "Acrylic (Transparent)"   , quantity = "25" , unitPrice = "$2.90" }
-  , { material = "Plywood (Birch)"         , quantity = "50" , unitPrice = "$1.25" }
-  , { material = "Laminate (Gold on Blue)" , quantity = "10" , unitPrice = "$2.35" }
-  ]
 
-nutriList : Model -> Html Msg
-nutriList model =
+nutriList : List NutritionValue -> Html Msg
+nutriList nutritionList =
   Table.table []
   [ Table.thead []
     [ Table.tr []
       [ Table.th [] [ text "营养元素" ]
-      , Table.th [ ] [ text "数量" ]
-      , Table.th [ ] [ text "单位" ]
+      , Table.th [] [ text "数量" ]
+      , Table.th [] [ text "单位" ]
       ]
     ]
   , Table.tbody []
-      (data |> List.map (\item ->
+      ( nutritionList |> List.map ( \item ->
         Table.tr []
           [ Table.td [] [ text item.material ]
-          , Table.td [ Table.numeric ] [ text item.quantity ]
+          , Table.td [ Table.numeric ] [ text ( toString item.quantity ) ]
           , Table.td [ Table.numeric ] [ text "克" ]
           ]
         )
@@ -241,48 +235,60 @@ infoCollectionView model =
     , css "align-items" "center"
     ]
     [ Lists.li []
-        [ Lists.content []
-            [ Lists.icon "inbox" []
-            , Textfield.render Mdl [0] model.mdl
-              [ Textfield.label ( inputLabel "请输入体重(公斤): 例如 75" "公斤" model.inputValues.weight )
-              , Options.onInput Weight
-              , Textfield.floatingLabel
-              , Textfield.text_
-              , Textfield.error ("请输入有效数字: 例如 75")
-                |> Options.when ( valueValidation model.inputValues.weight )
-              ]
-              []
-            ]
+      [ Lists.content []
+        [ Lists.icon "inbox" []
+        , Textfield.render Mdl [1] model.mdl
+          [ Textfield.label ( inputLabel "请输入体重(公斤): 例如 75" "公斤" model.inputValues.weight )
+          , Options.onInput Weight
+          , Textfield.floatingLabel
+          , Textfield.text_
+          , Textfield.error ("请输入有效数字: 例如 75")
+            |> Options.when ( valueValidation model.inputValues.weight )
+          ]
+          []
         ]
+      ]
     , Lists.li []
-        [ Lists.content []
-            [ Lists.icon "send" []
-            , Textfield.render Mdl [1] model.mdl
-              [ Textfield.label ( inputLabel "请输入体脂率: 例如 0.23" " :体脂率" model.inputValues.weight_fat_rate )
-              , Options.onInput WeightFatRate
-              , Textfield.floatingLabel
-              , Textfield.text_
-              , Textfield.error ("请输入有效数字: 例如 0.23")
-                |> Options.when ( valueValidation model.inputValues.weight_fat_rate )
-              ]
-              []
-            ]
+      [ Lists.content []
+        [ Lists.icon "send" []
+        , Textfield.render Mdl [2] model.mdl
+          [ Textfield.label ( inputLabel "请输入体脂率: 例如 0.23" " :体脂率" model.inputValues.weight_fat_rate )
+          , Options.onInput WeightFatRate
+          , Textfield.floatingLabel
+          , Textfield.text_
+          , Textfield.error ("请输入有效数字: 例如 0.23")
+            |> Options.when ( valueValidation model.inputValues.weight_fat_rate )
+          ]
+          []
         ]
+      ]
     , Lists.li []
+      [ Lists.content []
+        [ Lists.icon "time" []
+        , Textfield.render Mdl [3] model.mdl
+          [ Textfield.label ( inputLabel "请输入训练时长: 例如 90" " 分钟训练时间" model.inputValues.training_time )
+          , Options.onInput TrainingTime
+          , Textfield.floatingLabel
+          , Textfield.text_
+          , Textfield.error ("请输入有效数字: 例如 90")
+            |> Options.when ( valueValidation model.inputValues.training_time )
+          ]
+          []
+        ]
+      ]
+      , Lists.li []
         [ Lists.content []
-            [ Lists.icon "time" []
-            , Textfield.render Mdl [2] model.mdl
-              [ Textfield.label ( inputLabel "请输入训练时长: 例如 90" " 分钟训练时间" model.inputValues.training_time )
-              , Options.onInput TrainingTime
-              , Textfield.floatingLabel
-              , Textfield.text_
-              , Textfield.error ("请输入有效数字: 例如 90")
-                |> Options.when ( valueValidation model.inputValues.training_time )
-              ]
-              []
+          [ Lists.icon "time" []
+          , Button.render Mdl [4] model.mdl
+            [ Button.raised
+            , Button.colored
+            , Options.onClick TriggerCalc
             ]
+            [ text "计算所需营养"]
+          ]
         ]
     ]
+
 
 valueValidation : Maybe Float -> Bool
 valueValidation maybeNum =

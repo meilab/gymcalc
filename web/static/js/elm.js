@@ -17077,6 +17077,7 @@ var _evancz$url_parser$UrlParser$intParam = function (name) {
 var _user$project$Config$invalidValue = 1326498.98765;
 var _user$project$Config$src_url = '/gymcalc';
 
+var _user$project$Messages$TriggerCalc = {ctor: 'TriggerCalc'};
 var _user$project$Messages$OnLocationChange = function (a) {
 	return {ctor: 'OnLocationChange', _0: a};
 };
@@ -17189,6 +17190,19 @@ var _user$project$Routing$parseLocation = function (location) {
 	}
 };
 
+var _user$project$Models$nutritionConstructor = {
+	ctor: '::',
+	_0: {material: '碳水化物', quantity: 76.2},
+	_1: {
+		ctor: '::',
+		_0: {material: '蛋白质', quantity: 177.84},
+		_1: {
+			ctor: '::',
+			_0: {material: '脂肪', quantity: 112.91},
+			_1: {ctor: '[]'}
+		}
+	}
+};
 var _user$project$Models$FundamentalValues = F3(
 	function (a, b, c) {
 		return {weight_in_pound: a, fat_in_pound: b, thin_weight_in_pound: c};
@@ -17196,6 +17210,10 @@ var _user$project$Models$FundamentalValues = F3(
 var _user$project$Models$MetabolismValues = F3(
 	function (a, b, c) {
 		return {fundamental: a, training: b, total: c};
+	});
+var _user$project$Models$NutritionValue = F2(
+	function (a, b) {
+		return {material: a, quantity: b};
 	});
 var _user$project$Models$InputValues = F3(
 	function (a, b, c) {
@@ -17208,12 +17226,14 @@ var _user$project$Models$initialModel = function (route) {
 		route: route,
 		inputValues: A3(_user$project$Models$InputValues, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
 		fundamental: A3(_user$project$Models$FundamentalValues, 0, 0, 0),
-		metabolism: A3(_user$project$Models$MetabolismValues, 0, 0, 0)
+		metabolism: A3(_user$project$Models$MetabolismValues, 0, 0, 0),
+		highDayNutrition: _user$project$Models$nutritionConstructor,
+		lowDayNutrition: _user$project$Models$nutritionConstructor
 	};
 };
-var _user$project$Models$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {mdl: a, selectedTab: b, route: c, inputValues: d, fundamental: e, metabolism: f};
+var _user$project$Models$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {mdl: a, selectedTab: b, route: c, inputValues: d, fundamental: e, metabolism: f, highDayNutrition: g, lowDayNutrition: h};
 	});
 
 var _user$project$Views$notFoundView = A2(
@@ -17289,7 +17309,7 @@ var _user$project$Views$infoCollectionView = function (model) {
 									_user$project$Messages$Mdl,
 									{
 										ctor: '::',
-										_0: 0,
+										_0: 1,
 										_1: {ctor: '[]'}
 									},
 									model.mdl,
@@ -17347,7 +17367,7 @@ var _user$project$Views$infoCollectionView = function (model) {
 										_user$project$Messages$Mdl,
 										{
 											ctor: '::',
-											_0: 1,
+											_0: 2,
 											_1: {ctor: '[]'}
 										},
 										model.mdl,
@@ -17405,7 +17425,7 @@ var _user$project$Views$infoCollectionView = function (model) {
 											_user$project$Messages$Mdl,
 											{
 												ctor: '::',
-												_0: 2,
+												_0: 3,
 												_1: {ctor: '[]'}
 											},
 											model.mdl,
@@ -17440,25 +17460,63 @@ var _user$project$Views$infoCollectionView = function (model) {
 								}),
 							_1: {ctor: '[]'}
 						}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_List$li,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$content,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_List$icon,
+											'time',
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: A5(
+												_debois$elm_mdl$Material_Button$render,
+												_user$project$Messages$Mdl,
+												{
+													ctor: '::',
+													_0: 4,
+													_1: {ctor: '[]'}
+												},
+												model.mdl,
+												{
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Button$raised,
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Button$colored,
+														_1: {
+															ctor: '::',
+															_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Messages$TriggerCalc),
+															_1: {ctor: '[]'}
+														}
+													}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('计算所需营养'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		});
 };
-var _user$project$Views$data = {
-	ctor: '::',
-	_0: {material: 'Acrylic (Transparent)', quantity: '25', unitPrice: '$2.90'},
-	_1: {
-		ctor: '::',
-		_0: {material: 'Plywood (Birch)', quantity: '50', unitPrice: '$1.25'},
-		_1: {
-			ctor: '::',
-			_0: {material: 'Laminate (Gold on Blue)', quantity: '10', unitPrice: '$2.35'},
-			_1: {ctor: '[]'}
-		}
-	}
-};
-var _user$project$Views$nutriList = function (model) {
+var _user$project$Views$nutriList = function (nutritionList) {
 	return A2(
 		_debois$elm_mdl$Material_Table$table,
 		{ctor: '[]'},
@@ -17540,7 +17598,8 @@ var _user$project$Views$nutriList = function (model) {
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text(item.quantity),
+												_0: _elm_lang$html$Html$text(
+													_elm_lang$core$Basics$toString(item.quantity)),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
@@ -17562,7 +17621,7 @@ var _user$project$Views$nutriList = function (model) {
 									}
 								});
 						},
-						_user$project$Views$data)),
+						nutritionList)),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -17643,7 +17702,7 @@ var _user$project$Views$homeView = function (model) {
 								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('高碳日营养'),
+								_0: _elm_lang$html$Html$text('低碳日营养'),
 								_1: {ctor: '[]'}
 							}
 						}
@@ -17656,9 +17715,9 @@ var _user$project$Views$homeView = function (model) {
 			_0: function () {
 				var _p3 = model.selectedTab;
 				if (_p3 === 0) {
-					return _user$project$Views$nutriList(model);
+					return _user$project$Views$nutriList(model.highDayNutrition);
 				} else {
-					return _user$project$Views$nutriList(model);
+					return _user$project$Views$nutriList(model.lowDayNutrition);
 				}
 			}(),
 			_1: {ctor: '[]'}
@@ -18000,12 +18059,82 @@ var _user$project$Views$Data = F3(
 		return {material: a, quantity: b, unitPrice: c};
 	});
 
+var _user$project$Update$calcLowDayNutrition = function (totalMetabolism) {
+	return {
+		ctor: '::',
+		_0: {material: '碳水化物', quantity: (totalMetabolism * 0.15) / 4},
+		_1: {
+			ctor: '::',
+			_0: {material: '蛋白质', quantity: (totalMetabolism * 0.35) / 4},
+			_1: {
+				ctor: '::',
+				_0: {material: '脂肪', quantity: (totalMetabolism * 0.5) / 9},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+};
+var _user$project$Update$calcHighDayNutrition = function (totalMetabolism) {
+	return {
+		ctor: '::',
+		_0: {material: '碳水化物', quantity: (totalMetabolism * 0.65) / 4},
+		_1: {
+			ctor: '::',
+			_0: {material: '蛋白质', quantity: (totalMetabolism * 0.25) / 4},
+			_1: {
+				ctor: '::',
+				_0: {material: '脂肪', quantity: (totalMetabolism * 0.1) / 9},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+};
+var _user$project$Update$calcMetabolism = F3(
+	function (inputValue, weight_in_pound, thin_weight_in_pound) {
+		var fundamental = thin_weight_in_pound * 12.5;
+		var training = function () {
+			var _p0 = inputValue.training_time;
+			if (_p0.ctor === 'Just') {
+				return ((weight_in_pound / 2.2) * 8.6e-2) * _p0._0;
+			} else {
+				return 0;
+			}
+		}();
+		return {fundamental: fundamental, training: training, total: fundamental + training};
+	});
+var _user$project$Update$calcFundamental = function (inputValue) {
+	var weight_in_pound = function () {
+		var _p1 = inputValue.weight;
+		if (_p1.ctor === 'Just') {
+			return _p1._0 * 2.2;
+		} else {
+			return 0;
+		}
+	}();
+	var fat_in_pound = function () {
+		var _p2 = inputValue.weight_fat_rate;
+		if (_p2.ctor === 'Just') {
+			return weight_in_pound * _p2._0;
+		} else {
+			return 0;
+		}
+	}();
+	var thin_weight_in_pound = weight_in_pound - fat_in_pound;
+	return {weight_in_pound: weight_in_pound, fat_in_pound: fat_in_pound, thin_weight_in_pound: thin_weight_in_pound};
+};
 var _user$project$Update$changeUrlCommand = F2(
 	function (model, route) {
-		var _p0 = route;
-		switch (_p0.ctor) {
+		var _p3 = route;
+		switch (_p3.ctor) {
 			case 'HomeRoute':
-				return _elm_lang$core$Platform_Cmd$none;
+				var isInfoCollectFinished = (!_elm_lang$core$Native_Utils.eq(model.inputValues.weight, _elm_lang$core$Maybe$Nothing)) || ((!_elm_lang$core$Native_Utils.eq(model.inputValues.weight_fat_rate, _elm_lang$core$Maybe$Nothing)) || (!_elm_lang$core$Native_Utils.eq(model.inputValues.training_time, _elm_lang$core$Maybe$Nothing)));
+				var _p4 = isInfoCollectFinished;
+				if (_p4 === true) {
+					return _elm_lang$core$Platform_Cmd$none;
+				} else {
+					return _elm_lang$navigation$Navigation$newUrl(
+						A2(_elm_lang$core$Basics_ops['++'], _user$project$Config$src_url, '/infocollection'));
+				}
 			case 'InfoCollectionRoute':
 				return _elm_lang$core$Platform_Cmd$none;
 			case 'FoodRoute':
@@ -18018,8 +18147,8 @@ var _user$project$Update$changeUrlCommand = F2(
 	});
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p1 = msg;
-		switch (_p1.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
 			case 'Weight':
 				var inputValues = model.inputValues;
 				var newInputValues = _elm_lang$core$Native_Utils.update(
@@ -18029,7 +18158,7 @@ var _user$project$Update$update = F2(
 							A2(
 								_elm_lang$core$Result$withDefault,
 								_user$project$Config$invalidValue,
-								_elm_lang$core$String$toFloat(_p1._0)))
+								_elm_lang$core$String$toFloat(_p5._0)))
 					});
 				return {
 					ctor: '_Tuple2',
@@ -18047,7 +18176,7 @@ var _user$project$Update$update = F2(
 							A2(
 								_elm_lang$core$Result$withDefault,
 								_user$project$Config$invalidValue,
-								_elm_lang$core$String$toFloat(_p1._0)))
+								_elm_lang$core$String$toFloat(_p5._0)))
 					});
 				return {
 					ctor: '_Tuple2',
@@ -18065,7 +18194,7 @@ var _user$project$Update$update = F2(
 							A2(
 								_elm_lang$core$Result$withDefault,
 								_user$project$Config$invalidValue,
-								_elm_lang$core$String$toFloat(_p1._0)))
+								_elm_lang$core$String$toFloat(_p5._0)))
 					});
 				return {
 					ctor: '_Tuple2',
@@ -18077,13 +18206,13 @@ var _user$project$Update$update = F2(
 			case 'Submit':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Messages$Mdl, _p1._0, model);
+				return A3(_debois$elm_mdl$Material$update, _user$project$Messages$Mdl, _p5._0, model);
 			case 'SelectTab':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{selectedTab: _p1._0}),
+						{selectedTab: _p5._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'NewUrl':
@@ -18092,17 +18221,29 @@ var _user$project$Update$update = F2(
 					model,
 					{
 						ctor: '::',
-						_0: _elm_lang$navigation$Navigation$newUrl(_p1._0),
+						_0: _elm_lang$navigation$Navigation$newUrl(_p5._0),
 						_1: {ctor: '[]'}
 					});
-			default:
-				var newRoute = _user$project$Routing$parseLocation(_p1._0);
+			case 'OnLocationChange':
+				var newRoute = _user$project$Routing$parseLocation(_p5._0);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{route: newRoute}),
 					_1: A2(_user$project$Update$changeUrlCommand, model, newRoute)
+				};
+			default:
+				var newFundamental = _user$project$Update$calcFundamental(model.inputValues);
+				var newMetabolism = A3(_user$project$Update$calcMetabolism, model.inputValues, newFundamental.weight_in_pound, newFundamental.thin_weight_in_pound);
+				var newHighDayNutrition = _user$project$Update$calcHighDayNutrition(newMetabolism.total);
+				var newLowDayNutrition = _user$project$Update$calcLowDayNutrition(newMetabolism.total);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{fundamental: newFundamental, metabolism: newMetabolism, highDayNutrition: newHighDayNutrition, lowDayNutrition: newLowDayNutrition}),
+					_1: _elm_lang$navigation$Navigation$newUrl(_user$project$Config$src_url)
 				};
 		}
 	});

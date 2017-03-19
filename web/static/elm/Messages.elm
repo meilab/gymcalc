@@ -12,3 +12,4 @@ type Msg
   | SelectTab Int
   | NewUrl String
   | OnLocationChange Location
+  | TriggerCalc

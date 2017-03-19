@@ -1,4 +1,4 @@
-module Models exposing(Model, initialModel)
+module Models exposing(..)
 
 import Material
 import Routing exposing(Route)
@@ -16,6 +16,28 @@ type alias MetabolismValues =
   , total : Float
   }
 
+type alias NutritionValue =
+  { material : String
+  , quantity : Float
+  }
+
+type alias HighDayNutrition = List NutritionValue
+
+type alias LowDayNutrition = List NutritionValue
+
+nutritionConstructor : List NutritionValue
+nutritionConstructor =
+  [ { material = "碳水化物"
+    , quantity = 76.2
+    }
+  , { material = "蛋白质"
+    , quantity = 177.84
+    }
+  , { material = "脂肪"
+    , quantity = 112.91
+    }
+  ]
+
 type alias InputValues =
   { weight : Maybe Float
   , weight_fat_rate : Maybe Float
@@ -29,6 +51,8 @@ type alias Model =
   , inputValues : InputValues
   , fundamental : FundamentalValues
   , metabolism : MetabolismValues
+  , highDayNutrition : HighDayNutrition
+  , lowDayNutrition : LowDayNutrition
   }
 
 initialModel : Route -> Model
@@ -39,4 +63,6 @@ initialModel route =
     , inputValues = InputValues Nothing Nothing Nothing
     , fundamental = FundamentalValues 0 0 0
     , metabolism = MetabolismValues 0 0 0
+    , highDayNutrition = nutritionConstructor
+    , lowDayNutrition = nutritionConstructor
     }
