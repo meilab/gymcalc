@@ -13,12 +13,13 @@ import Material.List as Lists
 import Material.Color as Color
 import Material.Scheme
 import Material.Button as Button
-import Material.Card as Card
 import Material.Tabs as Tabs
 import Material.Table as Table
-import Material.Grid as Grid exposing (grid, size, cell, Device(..))
 import Routing exposing(Route(..))
 import Config exposing(invalidValue)
+
+import Views.Food exposing(foodList)
+import Views.Helpers exposing(defaultHeader)
 
 
 styles : String
@@ -49,29 +50,26 @@ view model =
       , Options.css "flex-direction" "row"
       , Options.css "align-items" "center"
       ]
-      { header = [ viewHeader model ]
+      { header = viewHeader model
       , drawer = [ drawerHeader model, viewDrawer model ]
       , tabs = ([], [])
       , main =
         [ viewBody model ]
       }
 
-viewHeader : Model -> Html Msg
+viewHeader : Model -> List (Html Msg)
 viewHeader model =
-  Layout.row
-    [ Color.background <| Color.color Color.Grey Color.S100
-    , Color.text <| Color.color Color.Grey Color.S900
-    ]
-    [ Layout.title [ css "display" "flex"
-                    , css "flex-direction" "row"
-                    , css "justify-content" "space-around"
-                    ]
-                    [ text "健身饮食" ]
-    , Layout.spacer
-    , Layout.navigation []
-      []
-    ]
-
+  case model.route of
+    HomeRoute ->
+      defaultHeader "营养建议"
+    InfoCollectionRoute ->
+      defaultHeader "请输入锻炼指标"
+    FoodRoute ->
+      defaultHeader "营养元素(单位: 克／克)"
+    IntroRoute ->
+      defaultHeader "三分练七分吃"
+    NotFoundRoute ->
+      defaultHeader "找不到您要的网站"
 
 type alias MenuItem =
   { text: String
@@ -166,7 +164,7 @@ viewBody model =
     InfoCollectionRoute ->
       infoCollectionView model
     FoodRoute ->
-      introView
+      foodList
     IntroRoute ->
       introView
     NotFoundRoute ->
@@ -198,16 +196,14 @@ homeView model =
       _ -> nutriList model.lowDayNutrition
   ]
 
-type alias Data =
-  { material : String
-  , quantity : String
-  , unitPrice : String
-  }
-
 
 nutriList : List NutritionValue -> Html Msg
 nutriList nutritionList =
-  Table.table []
+  Table.table
+  [ css "display" "flex"
+  , css "flex-direction" "column"
+  , css "align-items" "center"
+  ]
   [ Table.thead []
     [ Table.tr []
       [ Table.th [] [ text "营养元素" ]
@@ -243,7 +239,7 @@ infoCollectionView model =
           , Textfield.floatingLabel
           , Textfield.text_
           , Textfield.error ("请输入有效数字: 例如 75")
-            |> Options.when ( valueValidation model.inputValues.weight )
+            |> Options.when ( valueValidation model.inputValues.weight  3 200)
           ]
           []
         ]
@@ -257,7 +253,7 @@ infoCollectionView model =
           , Textfield.floatingLabel
           , Textfield.text_
           , Textfield.error ("请输入有效数字: 例如 0.23")
-            |> Options.when ( valueValidation model.inputValues.weight_fat_rate )
+            |> Options.when ( valueValidation model.inputValues.weight_fat_rate 0.1 0.7)
           ]
           []
         ]
@@ -271,7 +267,7 @@ infoCollectionView model =
           , Textfield.floatingLabel
           , Textfield.text_
           , Textfield.error ("请输入有效数字: 例如 90")
-            |> Options.when ( valueValidation model.inputValues.training_time )
+            |> Options.when ( valueValidation model.inputValues.training_time 1 1440)
           ]
           []
         ]
@@ -290,8 +286,8 @@ infoCollectionView model =
     ]
 
 
-valueValidation : Maybe Float -> Bool
-valueValidation maybeNum =
+valueValidation : Maybe Float -> Float -> Float -> Bool
+valueValidation maybeNum minValue maxValue =
   case maybeNum of
     Just num ->
       num == invalidValue

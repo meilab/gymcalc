@@ -14,8 +14,8 @@ changeUrlCommand model route =
     HomeRoute ->
       let isInfoCollectFinished =
             model.inputValues.weight /= Nothing
-            || model.inputValues.weight_fat_rate /= Nothing
-            || model.inputValues.training_time /= Nothing
+            && model.inputValues.weight_fat_rate /= Nothing
+            && model.inputValues.training_time /= Nothing
       in
         case isInfoCollectFinished of
           True ->
