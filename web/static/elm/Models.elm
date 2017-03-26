@@ -54,10 +54,18 @@ type alias InputValues =
   , foods : List InputFood
   }
 
+type alias Url =
+  { origin: String
+  , src_url : String
+  , api_url : String
+  }
+
 type alias Model =
   { mdl : Material.Model
-  , selectedTab : Int
+  , selectedMenuTab : Int
+  , selectedNutritionTab : Int
   , route : Routing.Route
+  , url : Url
   , inputValues : InputValues
   , fundamental : FundamentalValues
   , metabolism : MetabolismValues
@@ -65,11 +73,13 @@ type alias Model =
   , lowDayNutrition : LowDayNutrition
   }
 
-initialModel : Route -> Model
-initialModel route =
+initialModel : Route -> Url -> Model
+initialModel route url =
     { mdl = Material.model
-    , selectedTab = 0
+    , selectedMenuTab = 0
+    , selectedNutritionTab = 0
     , route = route
+    , url = url
     , inputValues = InputValues Nothing Nothing Nothing []
     , fundamental = FundamentalValues 0 0 0
     , metabolism = MetabolismValues 0 0 0

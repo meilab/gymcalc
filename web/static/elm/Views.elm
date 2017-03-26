@@ -2,6 +2,8 @@ module Views exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing(..)
+import Dict exposing (Dict)
+import Array exposing (Array)
 import Messages exposing (Msg(..))
 import Models exposing (Model, NutritionValue)
 import Markdown
@@ -15,10 +17,10 @@ import Material.Scheme
 import Material.Button as Button
 import Material.Tabs as Tabs
 import Material.Table as Table
-import Routing exposing(Route(..))
+import Routing exposing(Route(..), routingItem, tabsTitles)
 import Config exposing(invalidValue)
 
-import Views.Food exposing(foodList)
+import Views.Food exposing(foodList, foodAsCards)
 import Views.Helpers exposing(defaultHeader)
 
 
@@ -44,15 +46,19 @@ view model =
   Material.Scheme.top <|
     Layout.render Mdl
       model.mdl
-      [ Layout.fixedHeader
-      , Layout.fixedDrawer
+      [ Layout.selectedTab model.selectedMenuTab
+      , Layout.onSelectTab SelectMenuTab
+      , Layout.fixedHeader
+      -- , Layout.fixedDrawer
+      , Layout.fixedTabs
       , Options.css "display" "flex !important"
       , Options.css "flex-direction" "row"
       , Options.css "align-items" "center"
       ]
       { header = viewHeader model
       , drawer = [ drawerHeader model, viewDrawer model ]
-      , tabs = ([], [])
+      , tabs = ( ( tabsTitles model.url.src_url )
+                , [ Color.background (Color.color Color.Teal Color.S400) ])
       , main =
         [ viewBody model ]
       }
@@ -71,31 +77,17 @@ viewHeader model =
     NotFoundRoute ->
       defaultHeader "找不到您要的网站"
 
-type alias MenuItem =
-  { text: String
-  , iconName : String
-  , route : Route
-  }
 
-menuItem : List MenuItem
-menuItem =
-  [ { text = "计算结果", iconName = "apps", route = HomeRoute }
-  , { text = "数据输入", iconName = "list", route = InfoCollectionRoute }
-  , { text = "健康饮食", iconName = "dashboard", route = FoodRoute }
-  , { text = "产品简介", iconName = "dashboard", route = IntroRoute }
-  ]
-
-
-viewDrawerMenuItem : Model -> MenuItem -> Html Msg
-viewDrawerMenuItem model menuItem =
+viewDrawerMenuItem : Model -> ( String, String, Route, String ) -> Html Msg
+viewDrawerMenuItem model (title, iconName, route, _) =
   let
     isCurrentLocation =
-      model.route == menuItem.route
+      model.route == route
 
     onClickCmd =
-      case ( isCurrentLocation, menuItem.route ) of
+      case ( isCurrentLocation, route ) of
         ( False, route ) ->
-          route |> Routing.urlFor |> NewUrl |> Options.onClick
+          route |> ( Routing.urlFor model.url.src_url ) |> NewUrl |> Options.onClick
 
         _ ->
           Options.nop
@@ -107,11 +99,11 @@ viewDrawerMenuItem model menuItem =
       , Options.css "font-weight" "500"
       ]
       [ 
-        Icon.view menuItem.iconName
+        Icon.view iconName
         [ Color.text <| Color.color Color.BlueGrey Color.S500
         , Options.css "margin-right" "32px"
         ]
-      , text menuItem.text
+      , text title
       ]
 
 
@@ -123,7 +115,7 @@ viewDrawer model =
     , Options.css "flex-grow" "1"
     ]
   <|
-    ( List.map (viewDrawerMenuItem model) menuItem )
+    ( List.map (viewDrawerMenuItem model) ( routingItem model.url.src_url ) )
 
 drawerHeader : Model -> Html Msg
 drawerHeader model =
@@ -164,7 +156,7 @@ viewBody model =
     InfoCollectionRoute ->
       infoCollectionView model
     FoodRoute ->
-      foodList
+      foodAsCards
     IntroRoute ->
       introView
     NotFoundRoute ->
@@ -175,8 +167,8 @@ homeView : Model -> Html Msg
 homeView model =
   Tabs.render Mdl [0] model.mdl
   [ Tabs.ripple
-  , Tabs.onSelectTab SelectTab
-  , Tabs.activeTab model.selectedTab
+  , Tabs.onSelectTab SelectNutritionTab
+  , Tabs.activeTab model.selectedNutritionTab
   ]
   [ Tabs.label
       [ Options.center ]
@@ -191,7 +183,7 @@ homeView model =
       , text "低碳日营养"
       ]
   ]
-  [ case model.selectedTab of
+  [ case model.selectedNutritionTab of
       0 -> nutriList model.highDayNutrition
       _ -> nutriList model.lowDayNutrition
   ]
@@ -234,8 +226,7 @@ infoCollectionView model =
     ]
     [ Lists.li []
       [ Lists.content []
-        [ Lists.icon "inbox" []
-        , Textfield.render Mdl [1] model.mdl
+        [ Textfield.render Mdl [1] model.mdl
           [ Textfield.label ( inputLabel "请输入体重(公斤): 例如 75" "公斤" model.inputValues.weight )
           , Options.onInput Weight
           , Textfield.floatingLabel
@@ -248,8 +239,7 @@ infoCollectionView model =
       ]
     , Lists.li []
       [ Lists.content []
-        [ Lists.icon "send" []
-        , Textfield.render Mdl [2] model.mdl
+        [ Textfield.render Mdl [2] model.mdl
           [ Textfield.label ( inputLabel "请输入体脂率: 例如 0.23" " :体脂率" model.inputValues.weight_fat_rate )
           , Options.onInput WeightFatRate
           , Textfield.floatingLabel
@@ -262,8 +252,7 @@ infoCollectionView model =
       ]
     , Lists.li []
       [ Lists.content []
-        [ Lists.icon "time" []
-        , Textfield.render Mdl [3] model.mdl
+        [ Textfield.render Mdl [3] model.mdl
           [ Textfield.label ( inputLabel "请输入训练时长: 例如 90" " 分钟训练时间" model.inputValues.training_time )
           , Options.onInput TrainingTime
           , Textfield.floatingLabel
@@ -276,8 +265,7 @@ infoCollectionView model =
       ]
       , Lists.li []
         [ Lists.content []
-          [ Lists.icon "time" []
-          , Button.render Mdl [4] model.mdl
+          [ Button.render Mdl [4] model.mdl
             [ Button.raised
             , Button.colored
             , Options.onClick TriggerCalc
@@ -304,7 +292,8 @@ inputLabel defaultMesssage append inputNum =
       if ( num == invalidValue ) then
         "请输入有效数字"
       else
-         toString num ++ append
+        --  toString num ++ append
+        ""
     Nothing ->
       defaultMesssage
 

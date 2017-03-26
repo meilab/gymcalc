@@ -5,8 +5,10 @@ import Models exposing(Model, InputValues, FundamentalValues, MetabolismValues, 
 import Material
 
 import Navigation
-import Routing exposing(Route(..), parseLocation)
-import Config exposing(invalidValue, src_url)
+import Routing exposing(Route(..), parseLocation, tabsUrls, urlTabs)
+import Config exposing(invalidValue)
+import Array exposing(Array)
+import Dict exposing(Dict)
 
 changeUrlCommand : Model -> Route -> Cmd Msg
 changeUrlCommand model route =
@@ -21,7 +23,7 @@ changeUrlCommand model route =
           True ->
             Cmd.none
           False ->
-            Navigation.newUrl ( src_url ++ "/infocollection")
+            Navigation.newUrl ( model.url.src_url ++ "/infocollection")
 
     InfoCollectionRoute ->
       Cmd.none
@@ -63,8 +65,16 @@ update msg model =
     Mdl msg_ ->
       Material.update Mdl msg_ model
 
-    SelectTab num ->
-      ( { model | selectedTab = num }, Cmd.none )
+    SelectNutritionTab num ->
+      ( { model | selectedNutritionTab = num }, Cmd.none )
+
+    SelectMenuTab num ->
+      let
+        url =
+          Array.get num ( tabsUrls model.url.src_url )
+          |> Maybe.withDefault model.url.src_url
+      in
+        ( { model | selectedMenuTab = num }, Navigation.newUrl url )
 
     NewUrl url ->
       model ! [ Navigation.newUrl url ]
@@ -72,9 +82,13 @@ update msg model =
     OnLocationChange location ->
       let
         newRoute =
-          parseLocation location
+          parseLocation location model.url.src_url
+
+        newSelectedMenuTab =
+          Dict.get location.pathname ( urlTabs model.url.src_url )
+          |> Maybe.withDefault -1
       in
-        ( { model | route = newRoute }, changeUrlCommand model newRoute )
+        ( { model | route = newRoute, selectedMenuTab = newSelectedMenuTab }, changeUrlCommand model newRoute )
 
     TriggerCalc ->
       let
@@ -88,7 +102,7 @@ update msg model =
                     , highDayNutrition = newHighDayNutrition
                     , lowDayNutrition = newLowDayNutrition
           }
-        , Navigation.newUrl src_url
+        , Navigation.newUrl model.url.src_url
         )
 
 

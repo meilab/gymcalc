@@ -1,6 +1,6 @@
 module Views.Food exposing(..)
 
-import Data exposing(..)
+import Data exposing(foodCollection, FoodInfo)
 
 import Html exposing (..)
 import Html.Attributes exposing(..)
@@ -17,9 +17,58 @@ import Material.Scheme
 import Material.Button as Button
 import Material.Tabs as Tabs
 import Material.Table as Table
+import Material.Card as Card
+import Material.Grid as Grid exposing (grid, size, cell, Device(..))
+import Views.Helpers exposing(..)
+
+foodAsCards : Html Msg
+foodAsCards =
+  foodCollection
+    |> List.map (\elem -> smallCell [ foodCard elem ])
+    |> grid []
+
+foodCard : FoodInfo -> Html Msg
+foodCard foodInfo =
+  Card.view
+    [ css "width" "100%"
+    , css "margin" "2rem"
+    -- , Color.background (Color.color Color.BlueGrey Color.S400)
+    , css "background-color" "white"
+    , Options.onClick ( SendCmds token exhibitionId deviceEndpointId scene.actions )
+    ]
+    [ Card.title
+      [ css "display" "flex"
+      , css "align-content" "flex-start"
+      , css "flex-direction" "column"
+      , css "align-items" "center"
+      , css "justify-content" "space-between"
+      ]
+      [ Options.styled Html.img
+        [ Options.attribute <| src "/images/exhibition/ctrl.png"
+        , css "width" "80px"
+        , css "height" "80px"
+        ]
+        []
+    --   , Options.styled Html.div
+    --     []
+        -- [ Card.head
+        --     -- [ white
+        --     -- , Options.scrim 0.75
+        --     -- , css "padding" "16px"
+        --     -- -- Restore default padding inside scrim
+        --     -- , css "width" "100%"
+        --     -- ]
+        --     -- [ text scene.name ]
+        -- ]
+      , Card.subhead 
+        [ css "color" "black" ]
+        [ text scene.name  ]
+      ]
+    --   , Card.text [][ text exhibition.address ]
+    ]
 
 foodList : Html Msg
-foodList  =
+foodList =
   Table.table
   [ css "display" "flex"
   , css "flex-direction" "column"

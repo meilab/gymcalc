@@ -2,8 +2,10 @@ module Routing exposing(..)
 
 import Navigation exposing (Location)
 import UrlParser exposing (..)
-import Config exposing(src_url)
 import Maybe exposing(Maybe)
+import Html exposing(Html, text)
+import Array exposing(Array)
+import Dict exposing(Dict)
 
 type Route
   = HomeRoute
@@ -12,42 +14,34 @@ type Route
   | IntroRoute
   | NotFoundRoute
 
-parseApiPath : Parser a a -> Parser a a
-parseApiPath item =
-  case ( parseAppend item ) of
-    Just result ->
-      result
-    Nothing ->
-      item
-
-parseAppend : Parser a a -> Maybe ( Parser a a )
-parseAppend item =
+parseAppend : String -> Parser a a -> Parser a a
+parseAppend src_url item =
   src_url
+  |> String.dropLeft 1
   |> String.split "/"
-  |> List.tail
-  |> Maybe.map( List.map ( s ) )
-  |> Maybe.map( List.reverse )
-  |> Maybe.map( List.foldl ( </> )( item ) )
+  |> List.map ( s )
+  |> List.reverse
+  |> List.foldl ( </> )( item )
 
-matchers : Parser (Route -> a) a
-matchers =
+matchers : String -> Parser (Route -> a) a
+matchers src_url =
   oneOf
-    [ map HomeRoute ( parseApiPath top ) 
-    , map InfoCollectionRoute ( parseApiPath ( s "infocollection" ) )
-    , map FoodRoute ( parseApiPath ( s "food" ) )
-    , map IntroRoute ( parseApiPath ( s "intro" ) )
+    [ map HomeRoute ( parseAppend src_url top ) 
+    , map InfoCollectionRoute ( parseAppend src_url ( s "infocollection" ) )
+    , map FoodRoute ( parseAppend src_url ( s "food" ) )
+    , map IntroRoute ( parseAppend src_url ( s "intro" ) )
     ]
 
-parseLocation : Location -> Route
-parseLocation location =
-  case ( parsePath matchers location ) of
+parseLocation : Location -> String -> Route
+parseLocation location src_url =
+  case ( parsePath ( matchers src_url ) location ) of
     Just route ->
       route
     Nothing ->
       NotFoundRoute
 
-urlFor : Route -> String
-urlFor route =
+urlFor : String -> Route -> String
+urlFor src_url route =
   case route of
     HomeRoute ->
       src_url
@@ -59,3 +53,28 @@ urlFor route =
       src_url ++ "/intro"
     NotFoundRoute ->
       src_url
+
+routingItem : String -> List ( String, String, Route, String )
+routingItem src_url =
+  [ ( "计算结果", "apps", HomeRoute, src_url )
+  , ( "数据输入", "list", InfoCollectionRoute, src_url ++ "/infocollection" )
+  , ( "健康饮食", "dashboard", FoodRoute, src_url ++ "/food" )
+  , ( "产品简介", "dashboard", IntroRoute, src_url ++ "/intro" )
+  ]
+
+tabsTitles : String -> List (Html a)
+tabsTitles src_url =
+  routingItem src_url
+  |> List.map (\(title, _, _, _) -> (text title))
+
+tabsUrls : String -> Array String
+tabsUrls src_url =
+  routingItem src_url
+  |> List.map ( \(_, _, _, url) -> url )
+  |> Array.fromList
+
+urlTabs : String -> Dict String Int
+urlTabs src_url =
+    routingItem src_url
+    |> List.indexedMap (\idx (_, _, _, url) -> ( url, idx ))
+    |> Dict.fromList

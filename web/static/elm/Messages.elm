@@ -9,7 +9,8 @@ type Msg
   | TrainingTime String
   | Submit
   | Mdl (Material.Msg Msg)
-  | SelectTab Int
+  | SelectNutritionTab Int
+  | SelectMenuTab Int
   | NewUrl String
   | OnLocationChange Location
   | TriggerCalc
