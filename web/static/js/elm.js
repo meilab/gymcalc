@@ -17081,10 +17081,10 @@ var _user$project$Data$foodCollection = {
 	_0: {name: '煮鸡蛋', protein: 0.121, fat: 0.105, carbohydrate: 2.1e-2, note: '51g/个'},
 	_1: {
 		ctor: '::',
-		_0: {name: '烤鸡胸', protein: 0.182, fat: 4.7e-2, carbohydrate: 2.4e-2, note: ''},
+		_0: {name: '蛋白', protein: 0.116, fat: 1.0e-3, carbohydrate: 3.1e-2, note: '31g/个'},
 		_1: {
 			ctor: '::',
-			_0: {name: '蛋白', protein: 0.116, fat: 1.0e-3, carbohydrate: 3.1e-2, note: '31g/个'},
+			_0: {name: '烤鸡胸', protein: 0.182, fat: 4.7e-2, carbohydrate: 2.4e-2, note: ''},
 			_1: {
 				ctor: '::',
 				_0: {name: '牛肉', protein: 0.162, fat: 2.8e-2, carbohydrate: 2.3e-2, note: ''},
@@ -17417,12 +17417,11 @@ var _user$project$Views_Helpers$smallCell = _user$project$Views_Helpers$itemCell
 var _user$project$Views_Helpers$white = _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white);
 var _user$project$Views_Helpers$rowStyle = {
 	ctor: '::',
-	_0: _debois$elm_mdl$Material_Color$background(
-		A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Teal, _debois$elm_mdl$Material_Color$S500)),
+	_0: A2(_debois$elm_mdl$Material_Options$css, 'transition', 'height 333ms ease-in-out 0s'),
 	_1: {
 		ctor: '::',
-		_0: _debois$elm_mdl$Material_Color$text(
-			A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S900)),
+		_0: _debois$elm_mdl$Material_Color$background(
+			A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Teal, _debois$elm_mdl$Material_Color$S500)),
 		_1: {ctor: '[]'}
 	}
 };
@@ -17668,23 +17667,201 @@ var _user$project$Views_Food$foodList = A2(
 			_1: {ctor: '[]'}
 		}
 	});
-var _user$project$Views_Food$foodCard = function (foodInfo) {
-	return _elm_lang$html$Html$text(foodInfo.name);
-};
-var _user$project$Views_Food$foodAsCards = A2(
-	_debois$elm_mdl$Material_Grid$grid,
-	{ctor: '[]'},
-	A2(
-		_elm_lang$core$List$map,
-		function (elem) {
-			return _user$project$Views_Helpers$smallCell(
-				{
+var _user$project$Views_Food$foodCard = F2(
+	function (model, foodInfo) {
+		return A2(
+			_debois$elm_mdl$Material_Card$view,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100%'),
+				_1: {
 					ctor: '::',
-					_0: _user$project$Views_Food$foodCard(elem),
+					_0: _debois$elm_mdl$Material_Color$background(
+						A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$LightBlue, _debois$elm_mdl$Material_Color$S400)),
 					_1: {ctor: '[]'}
-				});
-		},
-		_user$project$Data$foodCollection));
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Card$title,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'align-content', 'flex-start'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$head,
+							{
+								ctor: '::',
+								_0: _user$project$Views_Helpers$white,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(foodInfo.name),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Card$subhead,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'black'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'蛋白质: ',
+											_elm_lang$core$Basics$toString(foodInfo.protein))),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Card$subhead,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'black'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'脂肪: ',
+												_elm_lang$core$Basics$toString(foodInfo.fat))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Card$subhead,
+										{
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'black'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'碳水化物: ',
+													_elm_lang$core$Basics$toString(foodInfo.carbohydrate))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Card$text,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(foodInfo.note),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$actions,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Card$border,
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'vertical-align', 'center'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
+										_1: {
+											ctor: '::',
+											_0: _user$project$Views_Helpers$white,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Messages$Mdl,
+									{
+										ctor: '::',
+										_0: 8,
+										_1: {
+											ctor: '::',
+											_0: 1,
+											_1: {ctor: '[]'}
+										}
+									},
+									model.mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$icon,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$ripple,
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$i('favorite_border'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Views_Food$foodAsCards = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Grid$grid,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$List$map,
+			function (elem) {
+				return _user$project$Views_Helpers$smallCell(
+					{
+						ctor: '::',
+						_0: A2(_user$project$Views_Food$foodCard, model, elem),
+						_1: {ctor: '[]'}
+					});
+			},
+			_user$project$Data$foodCollection));
+};
 
 var _user$project$Views$notFoundView = A2(
 	_elm_lang$html$Html$div,
@@ -18189,7 +18366,7 @@ var _user$project$Views$viewBody = function (model) {
 		case 'InfoCollectionRoute':
 			return _user$project$Views$infoCollectionView(model);
 		case 'FoodRoute':
-			return _user$project$Views_Food$foodAsCards;
+			return _user$project$Views_Food$foodAsCards(model);
 		case 'IntroRoute':
 			return _user$project$Views$introView;
 		default:

@@ -36,8 +36,9 @@ titleStyle =
 
 rowStyle : List (Options.Property c m)
 rowStyle =
-  [ Color.background <| Color.color Color.Teal Color.S500
-  , Color.text <| Color.color Color.Grey Color.S900
+  [ css "transition" "height 333ms ease-in-out 0s"
+  , Color.background <| Color.color Color.Teal Color.S500
+  -- , Color.text <| Color.color Color.Grey Color.S900
   ]
 
 white : Options.Property a b

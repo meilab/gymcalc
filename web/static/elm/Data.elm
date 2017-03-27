@@ -17,17 +17,17 @@ foodCollection =
     , carbohydrate = 0.021
     , note = "51g/个"
     }
-  , { name = "烤鸡胸"
-    , protein = 0.182
-    , fat = 0.047
-    , carbohydrate = 0.024
-    , note = ""
-    }
   , { name = "蛋白"
     , protein = 0.116
     , fat = 0.001
     , carbohydrate = 0.031
     , note = "31g/个"
+    }
+  , { name = "烤鸡胸"
+    , protein = 0.182
+    , fat = 0.047
+    , carbohydrate = 0.024
+    , note = ""
     }
   , { name = "牛肉"
     , protein = 0.162

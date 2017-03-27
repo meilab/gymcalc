@@ -21,20 +21,21 @@ import Material.Card as Card
 import Material.Grid as Grid exposing (grid, size, cell, Device(..))
 import Views.Helpers exposing(..)
 
-foodAsCards : Html Msg
-foodAsCards =
+foodAsCards : Model -> Html Msg
+foodAsCards model =
   foodCollection
-    |> List.map (\elem -> smallCell [ foodCard elem ])
+    |> List.map (\elem -> smallCell [ foodCard model elem ])
     |> grid []
 
-foodCard : FoodInfo -> Html Msg
-foodCard foodInfo =
+foodCard : Model -> FoodInfo -> Html Msg
+foodCard model foodInfo =
   Card.view
     [ css "width" "100%"
-    , css "margin" "2rem"
+    -- , css "margin" "2rem"
     -- , Color.background (Color.color Color.BlueGrey Color.S400)
-    , css "background-color" "white"
-    , Options.onClick ( SendCmds token exhibitionId deviceEndpointId scene.actions )
+    -- , css "background-color" "white"
+    , Color.background (Color.color Color.LightBlue Color.S400)
+    -- , Options.onClick ( SendCmds token exhibitionId deviceEndpointId scene.actions )
     ]
     [ Card.title
       [ css "display" "flex"
@@ -43,28 +44,33 @@ foodCard foodInfo =
       , css "align-items" "center"
       , css "justify-content" "space-between"
       ]
-      [ Options.styled Html.img
-        [ Options.attribute <| src "/images/exhibition/ctrl.png"
-        , css "width" "80px"
-        , css "height" "80px"
+      [ Card.head
+        [ white
+        -- , Options.scrim 0.75
+        -- , css "padding" "16px"
+        -- Restore default padding inside scrim
+        -- , css "width" "100%"
         ]
-        []
-    --   , Options.styled Html.div
-    --     []
-        -- [ Card.head
-        --     -- [ white
-        --     -- , Options.scrim 0.75
-        --     -- , css "padding" "16px"
-        --     -- -- Restore default padding inside scrim
-        --     -- , css "width" "100%"
-        --     -- ]
-        --     -- [ text scene.name ]
-        -- ]
+        [ text foodInfo.name ]
       , Card.subhead 
         [ css "color" "black" ]
-        [ text scene.name  ]
+        [ text ( "蛋白质: " ++ toString( foodInfo.protein ) )  ]
+      , Card.subhead 
+        [ css "color" "black" ]
+        [ text ( "脂肪: " ++ toString( foodInfo.fat ) )  ]
+      , Card.subhead 
+        [ css "color" "black" ]
+        [ text ( "碳水化物: " ++ toString( foodInfo.carbohydrate ) )  ]
       ]
-    --   , Card.text [][ text exhibition.address ]
+      , Card.text [][ text foodInfo.note ]
+      , Card.actions
+        [ Card.border, css "vertical-align" "center", css "text-align" "right", white ]
+        [ Button.render Mdl
+          [ 8, 1 ]
+          model.mdl
+          [ Button.icon, Button.ripple ]
+          [ Icon.i "favorite_border" ]
+        ]
     ]
 
 foodList : Html Msg

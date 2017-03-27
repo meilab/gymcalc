@@ -156,7 +156,8 @@ viewBody model =
     InfoCollectionRoute ->
       infoCollectionView model
     FoodRoute ->
-      foodAsCards
+      foodAsCards model
+      -- foodList
     IntroRoute ->
       introView
     NotFoundRoute ->
