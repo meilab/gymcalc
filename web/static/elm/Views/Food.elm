@@ -5,7 +5,7 @@ import Data exposing(foodCollection, FoodInfo)
 import Html exposing (..)
 import Html.Attributes exposing(..)
 import Messages exposing (Msg(..))
-import Models exposing (Model, NutritionValue)
+import Models exposing (Model, NutritionValue, SelectedFoods)
 import Markdown
 import Material.Layout as Layout
 import Material.Options as Options exposing (css, cs, when)
@@ -19,7 +19,8 @@ import Material.Tabs as Tabs
 import Material.Table as Table
 import Material.Card as Card
 import Material.Grid as Grid exposing (grid, size, cell, Device(..))
-import Views.Helpers exposing(..)
+import Helpers exposing(..)
+import Material.Typography as Typography
 
 foodAsCards : Model -> Html Msg
 foodAsCards model =
@@ -65,13 +66,44 @@ foodCard model foodInfo =
       , Card.text [][ text foodInfo.note ]
       , Card.actions
         [ Card.border, css "vertical-align" "center", css "text-align" "right", white ]
-        [ Button.render Mdl
+        [ Options.span [ Typography.caption, Typography.contrast 0.87 ] [ text ( toString foodInfo.defaultQuantity ) ]
+        , Button.render Mdl
           [ 8, 1 ]
           model.mdl
-          [ Button.icon, Button.ripple ]
-          [ Icon.i "favorite_border" ]
+          [ Button.icon
+          , Button.ripple
+          , Options.onClick ( AddFood foodInfo.name foodInfo.defaultQuantity )
+          ]
+          [ Icon.i "add"
+          -- , Icon.i "favorite_border"
+          ]
         ]
     ]
+
+selectedFoodList : List SelectedFoods -> Html Msg
+selectedFoodList selectedFood =
+  Table.table
+  [ css "display" "flex"
+  , css "flex-direction" "column"
+  , css "align-items" "center"
+  ]
+  [ Table.thead []
+    [ Table.tr []
+      [ Table.th [] [ text "食物" ]
+      , Table.th [] [ text "克" ]
+      , Table.th [] [ text "删除" ]
+      ]
+    ]
+  , Table.tbody []
+      ( selectedFood |> List.map ( \(name, quantity) ->
+        Table.tr []
+          [ Table.td [] [ text name ]
+          , Table.td [ Table.numeric ] [ text ( toString quantity ) ]
+          , Table.td [ Table.numeric ] [ Icon.i "favorite_border" ]
+          ]
+        )
+      )
+  ]
 
 foodList : Html Msg
 foodList =

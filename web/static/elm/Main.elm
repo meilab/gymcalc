@@ -5,7 +5,8 @@ import Models exposing(..)
 import Messages exposing(Msg(..))
 import Update exposing(..)
 import Navigation exposing (Location)
-import Routing
+import Routing exposing(urlTabs)
+import Dict exposing(Dict)
 
 main : Program Never Model Msg
 main =
@@ -33,6 +34,10 @@ init location =
     currentRoute =
       Routing.parseLocation location src_url
 
+    selectedMenuTab =
+          Dict.get location.pathname ( urlTabs src_url )
+          |> Maybe.withDefault -1
+
     url =
       { origin = location.origin
       , src_url = src_url
@@ -40,10 +45,9 @@ init location =
       }
 
     initCommand =
-            changeUrlCommand ( initialModel currentRoute url ) currentRoute
+            changeUrlCommand ( initialModel currentRoute url selectedMenuTab ) currentRoute
   in
-  Debug.log(toString(location))
-  ( initialModel currentRoute url, initCommand )
+  ( initialModel currentRoute url selectedMenuTab, initCommand )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

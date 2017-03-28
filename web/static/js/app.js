@@ -22,4 +22,5 @@ import "phoenix_html"
 
 import Elm from "./elm"
 const div = document.getElementById('main')
-Elm.Main.embed(div)
+// Elm.Main.embed(div)
+Elm.Main.fullscreen()

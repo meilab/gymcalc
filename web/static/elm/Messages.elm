@@ -14,3 +14,4 @@ type Msg
   | NewUrl String
   | OnLocationChange Location
   | TriggerCalc
+  | AddFood String Int

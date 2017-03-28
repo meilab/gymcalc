@@ -1,4 +1,4 @@
-module Views.Helpers exposing (..)
+module Helpers exposing (..)
 
 import Html exposing (Html, text, span)
 import Material.Layout as Layout
@@ -7,6 +7,7 @@ import Messages exposing (Msg)
 import Material.Options as Options exposing (Style, css, cs, when)
 import Material.Color as Color
 import Material.Grid as Grid exposing (grid, size, cell, Device(..))
+import Task
 
 defaultHeader : String -> List (Html Msg)
 defaultHeader headerText =
@@ -67,3 +68,10 @@ smallCell =
 itemCell :  List (Style a) -> List (Html a) -> Grid.Cell a 
 itemCell styling =
   cell <| List.concat [ cellStyle, styling ]
+
+{-|
+  Lift any value of type `msg` to a `Cmd msg`.
+-}
+cmd : msg -> Cmd msg
+cmd msg =
+    Task.perform (always msg) (Task.succeed msg)

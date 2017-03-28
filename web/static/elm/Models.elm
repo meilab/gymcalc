@@ -22,6 +22,10 @@ type alias NutritionValue =
   , actualQuantity : Int
   }
 
+-- ( name, quantity )
+type alias SelectedFoods = ( String, Int )
+
+
 type alias HighDayNutrition = List NutritionValue
 
 type alias LowDayNutrition = List NutritionValue
@@ -71,12 +75,13 @@ type alias Model =
   , metabolism : MetabolismValues
   , highDayNutrition : HighDayNutrition
   , lowDayNutrition : LowDayNutrition
+  , selectedFoods : List SelectedFoods
   }
 
-initialModel : Route -> Url -> Model
-initialModel route url =
+initialModel : Route -> Url -> Int -> Model
+initialModel route url selectedMenuTab =
     { mdl = Material.model
-    , selectedMenuTab = 0
+    , selectedMenuTab = selectedMenuTab
     , selectedNutritionTab = 0
     , route = route
     , url = url
@@ -85,4 +90,5 @@ initialModel route url =
     , metabolism = MetabolismValues 0 0 0
     , highDayNutrition = nutritionConstructor
     , lowDayNutrition = nutritionConstructor
+    , selectedFoods = []
     }

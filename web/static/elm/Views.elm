@@ -5,7 +5,7 @@ import Html.Attributes exposing(..)
 import Dict exposing (Dict)
 import Array exposing (Array)
 import Messages exposing (Msg(..))
-import Models exposing (Model, NutritionValue)
+import Models exposing (Model, NutritionValue, SelectedFoods)
 import Markdown
 import Material.Layout as Layout
 import Material.Options as Options exposing (css, cs, when)
@@ -20,8 +20,8 @@ import Material.Table as Table
 import Routing exposing(Route(..), routingItem, tabsTitles)
 import Config exposing(invalidValue)
 
-import Views.Food exposing(foodList, foodAsCards)
-import Views.Helpers exposing(defaultHeader)
+import Views.Food exposing(foodList, foodAsCards, selectedFoodList)
+import Helpers exposing(defaultHeader)
 
 
 styles : String
@@ -166,6 +166,21 @@ viewBody model =
 
 homeView : Model -> Html Msg
 homeView model =
+  div []
+    [ nutritionView model
+    , foodListView model.selectedFoods
+    ]
+
+foodListView : List SelectedFoods -> Html Msg
+foodListView selectedFoods =
+  case List.isEmpty selectedFoods of
+    True ->
+      text "Select Food"
+    False ->
+      selectedFoodList selectedFoods
+
+nutritionView : Model -> Html Msg
+nutritionView model =
   Tabs.render Mdl [0] model.mdl
   [ Tabs.ripple
   , Tabs.onSelectTab SelectNutritionTab

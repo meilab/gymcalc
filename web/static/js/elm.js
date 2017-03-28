@@ -15920,6 +15920,34 @@ var _debois$elm_mdl$Material_Table$descending = _debois$elm_mdl$Material_Table$s
 var _debois$elm_mdl$Material_Table$Ascending = {ctor: 'Ascending'};
 var _debois$elm_mdl$Material_Table$ascending = _debois$elm_mdl$Material_Table$sorted(_debois$elm_mdl$Material_Table$Ascending);
 
+var _debois$elm_mdl$Material_Typography$uppercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-uppercase');
+var _debois$elm_mdl$Material_Typography$lowercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-lowercase');
+var _debois$elm_mdl$Material_Typography$capitalize = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-capitalize');
+var _debois$elm_mdl$Material_Typography$justify = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-justify');
+var _debois$elm_mdl$Material_Typography$right = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-right');
+var _debois$elm_mdl$Material_Typography$left = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-left');
+var _debois$elm_mdl$Material_Typography$center = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-center');
+var _debois$elm_mdl$Material_Typography$tableStriped = _debois$elm_mdl$Material_Options$cs('mdl-typography--table-striped');
+var _debois$elm_mdl$Material_Typography$nowrap = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-nowrap');
+var _debois$elm_mdl$Material_Typography$contrast = function (x) {
+	return A2(
+		_debois$elm_mdl$Material_Options$css,
+		'opacity',
+		_elm_lang$core$Basics$toString(x));
+};
+var _debois$elm_mdl$Material_Typography$menu = _debois$elm_mdl$Material_Options$cs('mdl-typography--menu-color-contrast');
+var _debois$elm_mdl$Material_Typography$button = _debois$elm_mdl$Material_Options$cs('mdl-typography--button-color-contrast');
+var _debois$elm_mdl$Material_Typography$caption = _debois$elm_mdl$Material_Options$cs('mdl-typography--caption-force-preferred-font-color-contrast');
+var _debois$elm_mdl$Material_Typography$body2 = _debois$elm_mdl$Material_Options$cs('mdl-typography--body-2-force-preferred-font-color-contrast');
+var _debois$elm_mdl$Material_Typography$body1 = _debois$elm_mdl$Material_Options$cs('mdl-typography--body-1-force-preferred-font-color-contrast');
+var _debois$elm_mdl$Material_Typography$subhead = _debois$elm_mdl$Material_Options$cs('mdl-typography--subhead-color-contrast');
+var _debois$elm_mdl$Material_Typography$title = _debois$elm_mdl$Material_Options$cs('mdl-typography--title-color-contrast');
+var _debois$elm_mdl$Material_Typography$headline = _debois$elm_mdl$Material_Options$cs('mdl-typography--headline-color-contrast');
+var _debois$elm_mdl$Material_Typography$display4 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-4-color-contrast');
+var _debois$elm_mdl$Material_Typography$display3 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-3-color-contrast');
+var _debois$elm_mdl$Material_Typography$display2 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-2-color-contrast');
+var _debois$elm_mdl$Material_Typography$display1 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-1-color-contrast');
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -17078,34 +17106,34 @@ var _user$project$Config$invalidValue = 1326498.98765;
 
 var _user$project$Data$foodCollection = {
 	ctor: '::',
-	_0: {name: '煮鸡蛋', protein: 0.121, fat: 0.105, carbohydrate: 2.1e-2, note: '51g/个'},
+	_0: {name: '煮鸡蛋', protein: 0.121, fat: 0.105, carbohydrate: 2.1e-2, note: '51g/个', defaultQuantity: 51},
 	_1: {
 		ctor: '::',
-		_0: {name: '蛋白', protein: 0.116, fat: 1.0e-3, carbohydrate: 3.1e-2, note: '31g/个'},
+		_0: {name: '蛋白', protein: 0.116, fat: 1.0e-3, carbohydrate: 3.1e-2, note: '31g/个', defaultQuantity: 31},
 		_1: {
 			ctor: '::',
-			_0: {name: '烤鸡胸', protein: 0.182, fat: 4.7e-2, carbohydrate: 2.4e-2, note: ''},
+			_0: {name: '烤鸡胸', protein: 0.182, fat: 4.7e-2, carbohydrate: 2.4e-2, note: '', defaultQuantity: 100},
 			_1: {
 				ctor: '::',
-				_0: {name: '牛肉', protein: 0.162, fat: 2.8e-2, carbohydrate: 2.3e-2, note: ''},
+				_0: {name: '牛肉', protein: 0.162, fat: 2.8e-2, carbohydrate: 2.3e-2, note: '', defaultQuantity: 100},
 				_1: {
 					ctor: '::',
-					_0: {name: '米饭', protein: 2.6e-2, fat: 3.0e-3, carbohydrate: 0.762, note: ''},
-					_1: {
-						ctor: '::',
-						_0: {name: '牛肉', protein: 0.162, fat: 2.8e-2, carbohydrate: 2.3e-2, note: ''},
-						_1: {ctor: '[]'}
-					}
+					_0: {name: '米饭', protein: 2.6e-2, fat: 3.0e-3, carbohydrate: 0.762, note: '', defaultQuantity: 135},
+					_1: {ctor: '[]'}
 				}
 			}
 		}
 	}
 };
-var _user$project$Data$FoodInfo = F5(
-	function (a, b, c, d, e) {
-		return {name: a, protein: b, fat: c, carbohydrate: d, note: e};
+var _user$project$Data$FoodInfo = F6(
+	function (a, b, c, d, e, f) {
+		return {name: a, protein: b, fat: c, carbohydrate: d, note: e, defaultQuantity: f};
 	});
 
+var _user$project$Messages$AddFood = F2(
+	function (a, b) {
+		return {ctor: 'AddFood', _0: a, _1: b};
+	});
 var _user$project$Messages$TriggerCalc = {ctor: 'TriggerCalc'};
 var _user$project$Messages$OnLocationChange = function (a) {
 	return {ctor: 'OnLocationChange', _0: a};
@@ -17131,6 +17159,133 @@ var _user$project$Messages$WeightFatRate = function (a) {
 };
 var _user$project$Messages$Weight = function (a) {
 	return {ctor: 'Weight', _0: a};
+};
+
+var _user$project$Helpers$cmd = function (msg) {
+	return A2(
+		_elm_lang$core$Task$perform,
+		_elm_lang$core$Basics$always(msg),
+		_elm_lang$core$Task$succeed(msg));
+};
+var _user$project$Helpers$cellStyle = {
+	ctor: '::',
+	_0: A2(_debois$elm_mdl$Material_Options$css, 'text-sizing', 'border-box'),
+	_1: {
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'white'),
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Helpers$itemCell = function (styling) {
+	return _debois$elm_mdl$Material_Grid$cell(
+		_elm_lang$core$List$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Helpers$cellStyle,
+				_1: {
+					ctor: '::',
+					_0: styling,
+					_1: {ctor: '[]'}
+				}
+			}));
+};
+var _user$project$Helpers$bigCell = _user$project$Helpers$itemCell(
+	{
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 4),
+		_1: {
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 6),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Helpers$smallCell = _user$project$Helpers$itemCell(
+	{
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 2),
+		_1: {
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 3),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Helpers$white = _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white);
+var _user$project$Helpers$rowStyle = {
+	ctor: '::',
+	_0: A2(_debois$elm_mdl$Material_Options$css, 'transition', 'height 333ms ease-in-out 0s'),
+	_1: {
+		ctor: '::',
+		_0: _debois$elm_mdl$Material_Color$background(
+			A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Teal, _debois$elm_mdl$Material_Color$S500)),
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Helpers$titleStyle = {
+	ctor: '::',
+	_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+	_1: {
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'row'),
+		_1: {
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-around'),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _user$project$Helpers$defaultHeaderWithNavigation = F2(
+	function (headerText, navigation) {
+		return {
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Layout$row,
+				_user$project$Helpers$rowStyle,
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Layout$title,
+						_user$project$Helpers$titleStyle,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(headerText),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Layout$spacer,
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Layout$navigation,
+								{ctor: '[]'},
+								navigation),
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		};
+	});
+var _user$project$Helpers$defaultHeader = function (headerText) {
+	return {
+		ctor: '::',
+		_0: A2(
+			_debois$elm_mdl$Material_Layout$row,
+			_user$project$Helpers$rowStyle,
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Layout$title,
+					_user$project$Helpers$titleStyle,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(headerText),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	};
 };
 
 var _user$project$Routing$urlFor = F2(
@@ -17326,11 +17481,11 @@ var _user$project$Models$InputValues = F4(
 	function (a, b, c, d) {
 		return {weight: a, weight_fat_rate: b, training_time: c, foods: d};
 	});
-var _user$project$Models$initialModel = F2(
-	function (route, url) {
+var _user$project$Models$initialModel = F3(
+	function (route, url, selectedMenuTab) {
 		return {
 			mdl: _debois$elm_mdl$Material$model,
-			selectedMenuTab: 0,
+			selectedMenuTab: selectedMenuTab,
 			selectedNutritionTab: 0,
 			route: route,
 			url: url,
@@ -17343,7 +17498,8 @@ var _user$project$Models$initialModel = F2(
 			fundamental: A3(_user$project$Models$FundamentalValues, 0, 0, 0),
 			metabolism: A3(_user$project$Models$MetabolismValues, 0, 0, 0),
 			highDayNutrition: _user$project$Models$nutritionConstructor,
-			lowDayNutrition: _user$project$Models$nutritionConstructor
+			lowDayNutrition: _user$project$Models$nutritionConstructor,
+			selectedFoods: {ctor: '[]'}
 		};
 	});
 var _user$project$Models$Url = F3(
@@ -17360,7 +17516,9 @@ var _user$project$Models$Model = function (a) {
 							return function (h) {
 								return function (i) {
 									return function (j) {
-										return {mdl: a, selectedMenuTab: b, selectedNutritionTab: c, route: d, url: e, inputValues: f, fundamental: g, metabolism: h, highDayNutrition: i, lowDayNutrition: j};
+										return function (k) {
+											return {mdl: a, selectedMenuTab: b, selectedNutritionTab: c, route: d, url: e, inputValues: f, fundamental: g, metabolism: h, highDayNutrition: i, lowDayNutrition: j, selectedFoods: k};
+										};
 									};
 								};
 							};
@@ -17369,127 +17527,6 @@ var _user$project$Models$Model = function (a) {
 				};
 			};
 		};
-	};
-};
-
-var _user$project$Views_Helpers$cellStyle = {
-	ctor: '::',
-	_0: A2(_debois$elm_mdl$Material_Options$css, 'text-sizing', 'border-box'),
-	_1: {
-		ctor: '::',
-		_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'white'),
-		_1: {ctor: '[]'}
-	}
-};
-var _user$project$Views_Helpers$itemCell = function (styling) {
-	return _debois$elm_mdl$Material_Grid$cell(
-		_elm_lang$core$List$concat(
-			{
-				ctor: '::',
-				_0: _user$project$Views_Helpers$cellStyle,
-				_1: {
-					ctor: '::',
-					_0: styling,
-					_1: {ctor: '[]'}
-				}
-			}));
-};
-var _user$project$Views_Helpers$bigCell = _user$project$Views_Helpers$itemCell(
-	{
-		ctor: '::',
-		_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 4),
-		_1: {
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 6),
-			_1: {ctor: '[]'}
-		}
-	});
-var _user$project$Views_Helpers$smallCell = _user$project$Views_Helpers$itemCell(
-	{
-		ctor: '::',
-		_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 2),
-		_1: {
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 3),
-			_1: {ctor: '[]'}
-		}
-	});
-var _user$project$Views_Helpers$white = _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white);
-var _user$project$Views_Helpers$rowStyle = {
-	ctor: '::',
-	_0: A2(_debois$elm_mdl$Material_Options$css, 'transition', 'height 333ms ease-in-out 0s'),
-	_1: {
-		ctor: '::',
-		_0: _debois$elm_mdl$Material_Color$background(
-			A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Teal, _debois$elm_mdl$Material_Color$S500)),
-		_1: {ctor: '[]'}
-	}
-};
-var _user$project$Views_Helpers$titleStyle = {
-	ctor: '::',
-	_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-	_1: {
-		ctor: '::',
-		_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'row'),
-		_1: {
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-around'),
-			_1: {ctor: '[]'}
-		}
-	}
-};
-var _user$project$Views_Helpers$defaultHeaderWithNavigation = F2(
-	function (headerText, navigation) {
-		return {
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_Layout$row,
-				_user$project$Views_Helpers$rowStyle,
-				{
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Layout$title,
-						_user$project$Views_Helpers$titleStyle,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(headerText),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Layout$spacer,
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Layout$navigation,
-								{ctor: '[]'},
-								navigation),
-							_1: {ctor: '[]'}
-						}
-					}
-				}),
-			_1: {ctor: '[]'}
-		};
-	});
-var _user$project$Views_Helpers$defaultHeader = function (headerText) {
-	return {
-		ctor: '::',
-		_0: A2(
-			_debois$elm_mdl$Material_Layout$row,
-			_user$project$Views_Helpers$rowStyle,
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Layout$title,
-					_user$project$Views_Helpers$titleStyle,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(headerText),
-						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
 	};
 };
 
@@ -17667,6 +17704,129 @@ var _user$project$Views_Food$foodList = A2(
 			_1: {ctor: '[]'}
 		}
 	});
+var _user$project$Views_Food$selectedFoodList = function (selectedFood) {
+	return A2(
+		_debois$elm_mdl$Material_Table$table,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Table$thead,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Table$tr,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Table$th,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('食物'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Table$th,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('克'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Table$th,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('删除'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Table$tbody,
+					{ctor: '[]'},
+					A2(
+						_elm_lang$core$List$map,
+						function (_p0) {
+							var _p1 = _p0;
+							return A2(
+								_debois$elm_mdl$Material_Table$tr,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Table$td,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(_p1._0),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Table$td,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Table$numeric,
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													_elm_lang$core$Basics$toString(_p1._1)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_debois$elm_mdl$Material_Table$td,
+												{
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Table$numeric,
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Icon$i('favorite_border'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										}
+									}
+								});
+						},
+						selectedFood)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Views_Food$foodCard = F2(
 	function (model, foodInfo) {
 		return A2(
@@ -17712,7 +17872,7 @@ var _user$project$Views_Food$foodCard = F2(
 							_debois$elm_mdl$Material_Card$head,
 							{
 								ctor: '::',
-								_0: _user$project$Views_Helpers$white,
+								_0: _user$project$Helpers$white,
 								_1: {ctor: '[]'}
 							},
 							{
@@ -17804,7 +17964,7 @@ var _user$project$Views_Food$foodCard = F2(
 										_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
 										_1: {
 											ctor: '::',
-											_0: _user$project$Views_Helpers$white,
+											_0: _user$project$Helpers$white,
 											_1: {ctor: '[]'}
 										}
 									}
@@ -17812,34 +17972,59 @@ var _user$project$Views_Food$foodCard = F2(
 							},
 							{
 								ctor: '::',
-								_0: A5(
-									_debois$elm_mdl$Material_Button$render,
-									_user$project$Messages$Mdl,
+								_0: A2(
+									_debois$elm_mdl$Material_Options$span,
 									{
 										ctor: '::',
-										_0: 8,
+										_0: _debois$elm_mdl$Material_Typography$caption,
 										_1: {
 											ctor: '::',
-											_0: 1,
-											_1: {ctor: '[]'}
-										}
-									},
-									model.mdl,
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Button$icon,
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Button$ripple,
+											_0: _debois$elm_mdl$Material_Typography$contrast(0.87),
 											_1: {ctor: '[]'}
 										}
 									},
 									{
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$i('favorite_border'),
+										_0: _elm_lang$html$Html$text(
+											_elm_lang$core$Basics$toString(foodInfo.defaultQuantity)),
 										_1: {ctor: '[]'}
 									}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A5(
+										_debois$elm_mdl$Material_Button$render,
+										_user$project$Messages$Mdl,
+										{
+											ctor: '::',
+											_0: 8,
+											_1: {
+												ctor: '::',
+												_0: 1,
+												_1: {ctor: '[]'}
+											}
+										},
+										model.mdl,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$icon,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$ripple,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														A2(_user$project$Messages$AddFood, foodInfo.name, foodInfo.defaultQuantity)),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Icon$i('add'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {ctor: '[]'}
 					}
@@ -17853,7 +18038,7 @@ var _user$project$Views_Food$foodAsCards = function (model) {
 		A2(
 			_elm_lang$core$List$map,
 			function (elem) {
-				return _user$project$Views_Helpers$smallCell(
+				return _user$project$Helpers$smallCell(
 					{
 						ctor: '::',
 						_0: A2(_user$project$Views_Food$foodCard, model, elem),
@@ -18261,7 +18446,7 @@ var _user$project$Views$nutriList = function (nutritionList) {
 			}
 		});
 };
-var _user$project$Views$homeView = function (model) {
+var _user$project$Views$nutritionView = function (model) {
 	return A6(
 		_debois$elm_mdl$Material_Tabs$render,
 		_user$project$Messages$Mdl,
@@ -18358,9 +18543,31 @@ var _user$project$Views$homeView = function (model) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$Views$foodListView = function (selectedFoods) {
+	var _p3 = _elm_lang$core$List$isEmpty(selectedFoods);
+	if (_p3 === true) {
+		return _elm_lang$html$Html$text('Select Food');
+	} else {
+		return _user$project$Views_Food$selectedFoodList(selectedFoods);
+	}
+};
+var _user$project$Views$homeView = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$Views$nutritionView(model),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Views$foodListView(model.selectedFoods),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Views$viewBody = function (model) {
-	var _p3 = model.route;
-	switch (_p3.ctor) {
+	var _p4 = model.route;
+	switch (_p4.ctor) {
 		case 'HomeRoute':
 			return _user$project$Views$homeView(model);
 		case 'InfoCollectionRoute':
@@ -18483,16 +18690,16 @@ var _user$project$Views$drawerHeader = function (model) {
 		});
 };
 var _user$project$Views$viewDrawerMenuItem = F2(
-	function (model, _p4) {
-		var _p5 = _p4;
-		var _p7 = _p5._2;
-		var isCurrentLocation = _elm_lang$core$Native_Utils.eq(model.route, _p7);
+	function (model, _p5) {
+		var _p6 = _p5;
+		var _p8 = _p6._2;
+		var isCurrentLocation = _elm_lang$core$Native_Utils.eq(model.route, _p8);
 		var onClickCmd = function () {
-			var _p6 = {ctor: '_Tuple2', _0: isCurrentLocation, _1: _p7};
-			if ((_p6.ctor === '_Tuple2') && (_p6._0 === false)) {
+			var _p7 = {ctor: '_Tuple2', _0: isCurrentLocation, _1: _p8};
+			if ((_p7.ctor === '_Tuple2') && (_p7._0 === false)) {
 				return _debois$elm_mdl$Material_Options$onClick(
 					_user$project$Messages$NewUrl(
-						A2(_user$project$Routing$urlFor, model.url.src_url, _p6._1)));
+						A2(_user$project$Routing$urlFor, model.url.src_url, _p7._1)));
 			} else {
 				return _debois$elm_mdl$Material_Options$nop;
 			}
@@ -18524,7 +18731,7 @@ var _user$project$Views$viewDrawerMenuItem = F2(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_Icon$view,
-					_p5._1,
+					_p6._1,
 					{
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Color$text(
@@ -18537,7 +18744,7 @@ var _user$project$Views$viewDrawerMenuItem = F2(
 					}),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p5._0),
+					_0: _elm_lang$html$Html$text(_p6._0),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -18566,18 +18773,18 @@ var _user$project$Views$viewDrawer = function (model) {
 			_user$project$Routing$routingItem(model.url.src_url)));
 };
 var _user$project$Views$viewHeader = function (model) {
-	var _p8 = model.route;
-	switch (_p8.ctor) {
+	var _p9 = model.route;
+	switch (_p9.ctor) {
 		case 'HomeRoute':
-			return _user$project$Views_Helpers$defaultHeader('营养建议');
+			return _user$project$Helpers$defaultHeader('营养建议');
 		case 'InfoCollectionRoute':
-			return _user$project$Views_Helpers$defaultHeader('请输入锻炼指标');
+			return _user$project$Helpers$defaultHeader('请输入锻炼指标');
 		case 'FoodRoute':
-			return _user$project$Views_Helpers$defaultHeader('营养元素(单位: 克／克)');
+			return _user$project$Helpers$defaultHeader('营养元素(单位: 克／克)');
 		case 'IntroRoute':
-			return _user$project$Views_Helpers$defaultHeader('三分练七分吃');
+			return _user$project$Helpers$defaultHeader('三分练七分吃');
 		default:
-			return _user$project$Views_Helpers$defaultHeader('找不到您要的网站');
+			return _user$project$Helpers$defaultHeader('找不到您要的网站');
 	}
 };
 var _user$project$Views$view = function (model) {
@@ -18816,13 +19023,19 @@ var _user$project$Update$update = F2(
 					_1: _elm_lang$navigation$Navigation$newUrl(url)
 				};
 			case 'NewUrl':
+				var toggleDrawerCmd = _user$project$Helpers$cmd(
+					_debois$elm_mdl$Material_Layout$toggleDrawer(_user$project$Messages$Mdl));
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(_p5._0),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: toggleDrawerCmd,
+							_1: {ctor: '[]'}
+						}
 					});
 			case 'OnLocationChange':
 				var _p7 = _p5._0;
@@ -18841,7 +19054,7 @@ var _user$project$Update$update = F2(
 						{route: newRoute, selectedMenuTab: newSelectedMenuTab}),
 					_1: A2(_user$project$Update$changeUrlCommand, model, newRoute)
 				};
-			default:
+			case 'TriggerCalc':
 				var newFundamental = _user$project$Update$calcFundamental(model.inputValues);
 				var newMetabolism = A3(_user$project$Update$calcMetabolism, model.inputValues, newFundamental.weight_in_pound, newFundamental.thin_weight_in_pound);
 				var newHighDayNutrition = A7(_user$project$Update$calcNutrition, newMetabolism.total, 0.1625, 6.25e-2, 1.1111111e-2, 350, 150, 20);
@@ -18852,6 +19065,19 @@ var _user$project$Update$update = F2(
 						model,
 						{fundamental: newFundamental, metabolism: newMetabolism, highDayNutrition: newHighDayNutrition, lowDayNutrition: newLowDayNutrition}),
 					_1: _elm_lang$navigation$Navigation$newUrl(model.url.src_url)
+				};
+			default:
+				var newSelectedFoods = {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _p5._0, _1: _p5._1},
+					_1: model.selectedFoods
+				};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selectedFoods: newSelectedFoods}),
+					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
 	});
@@ -18877,6 +19103,13 @@ var _user$project$Main$init = function (location) {
 		}
 	}();
 	var currentRoute = A2(_user$project$Routing$parseLocation, location, src_url);
+	var selectedMenuTab = A2(
+		_elm_lang$core$Maybe$withDefault,
+		-1,
+		A2(
+			_elm_lang$core$Dict$get,
+			location.pathname,
+			_user$project$Routing$urlTabs(src_url)));
 	var url = {
 		origin: location.origin,
 		src_url: src_url,
@@ -18884,16 +19117,13 @@ var _user$project$Main$init = function (location) {
 	};
 	var initCommand = A2(
 		_user$project$Update$changeUrlCommand,
-		A2(_user$project$Models$initialModel, currentRoute, url),
+		A3(_user$project$Models$initialModel, currentRoute, url, selectedMenuTab),
 		currentRoute);
-	return A2(
-		_elm_lang$core$Debug$log,
-		_elm_lang$core$Basics$toString(location),
-		{
-			ctor: '_Tuple2',
-			_0: A2(_user$project$Models$initialModel, currentRoute, url),
-			_1: initCommand
-		});
+	return {
+		ctor: '_Tuple2',
+		_0: A3(_user$project$Models$initialModel, currentRoute, url, selectedMenuTab),
+		_1: initCommand
+	};
 };
 var _user$project$Main$main = A2(
 	_elm_lang$navigation$Navigation$program,

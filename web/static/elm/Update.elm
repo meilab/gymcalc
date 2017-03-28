@@ -1,7 +1,13 @@
 module Update exposing(..)
 
 import Messages exposing(Msg(..))
-import Models exposing(Model, InputValues, FundamentalValues, MetabolismValues, NutritionValue)
+import Models exposing(Model
+                      , InputValues
+                      , FundamentalValues
+                      , MetabolismValues
+                      , NutritionValue
+                      , SelectedFoods
+                      )
 import Material
 
 import Navigation
@@ -9,6 +15,8 @@ import Routing exposing(Route(..), parseLocation, tabsUrls, urlTabs)
 import Config exposing(invalidValue)
 import Array exposing(Array)
 import Dict exposing(Dict)
+import Material.Layout as Layout
+import Helpers exposing(cmd)
 
 changeUrlCommand : Model -> Route -> Cmd Msg
 changeUrlCommand model route =
@@ -77,7 +85,11 @@ update msg model =
         ( { model | selectedMenuTab = num }, Navigation.newUrl url )
 
     NewUrl url ->
-      model ! [ Navigation.newUrl url ]
+      let
+        toggleDrawerCmd =
+          cmd ( Layout.toggleDrawer Mdl )
+      in
+        model ! [ ( Navigation.newUrl url ), toggleDrawerCmd ]
 
     OnLocationChange location ->
       let
@@ -105,6 +117,13 @@ update msg model =
         , Navigation.newUrl model.url.src_url
         )
 
+    AddFood name quantity->
+      let 
+        newSelectedFoods =
+          ( name, quantity ) :: model.selectedFoods
+
+      in
+        ( { model | selectedFoods = newSelectedFoods }, Cmd.none )
 
 
 calcFundamental : InputValues -> FundamentalValues
